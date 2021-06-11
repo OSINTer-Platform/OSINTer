@@ -48,7 +48,23 @@ def RSSArticleURLs(RSSPath):
 
 
 
-def main():
+def gatherArticleURLs():
+    # Get the contents of the different profiles
     profiles = getProfiles()
 
-main()
+    articleURLs = list()
+
+    for profile in getProfiles():
+        # Parsing the json properly
+        profile = json.loads(profile)['source']
+
+        # For those were the RSS feed is useful, that will be used
+        if profile['retrivalMethod'] == "rss":
+            articleURLs.append(RSSArticleURLs(profile['newPath']))
+
+        # For basically everything else scraping will be used
+        elif profile['retrivalMethod'] == "sraping":
+            articleURLs.append(scrapeArticleURLs(profile['newsPath']))
+
+
+gatherArticleURLs()
