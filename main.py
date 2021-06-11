@@ -21,7 +21,21 @@ import requests
 # For parsing html
 from bs4 import BeautifulSoup
 
+# For checking if string matches regex
+import re
 
+
+# Function for intellegently adding the domain to a relative path on website depending on if the domain is already there
+def catURL(rootURL, relativePath):
+    if re.match(r"https?:\/\/.*\..*", relativePath):
+        return relativePath
+    else:
+        return rootURL[:-1] + relativePath
+
+
+
+
+# Function for reading all profile files and returning the content in a list
 def getProfiles():
     # Listing all the profiles by getting the OS indepentent path to profiles folder and listing files in it
     profileFiles = os.listdir(path=Path("./profiles"))
@@ -68,12 +82,12 @@ def scrapeArticleURLs(rootURL, frontPageURL, scrapingTargets):
         for linkContainer in itertools.islice(frontPageSoup.find_all(scrapingTargets['element'], class_=scrapingTargets['class']), 10):
 
             # The URL specified in the source will ofc be without the domain and http information, so that get's prepended here too by removing the last / from the url since the path also contains one
-            articleURLs.append(catURL(rootURL[:-1], linkContainer.find('a').get('href')))
+            articleURLs.append(catURL(rootURL, linkContainer.find('a').get('href')))
 
     # Others do hovewer have a uniqe class for the links, and here we can just extract those
     else:
         for link in itertools.islice(frontPageSoup.find_all('a', class_=scrapingTargets['linkClass']), 10):
-            articleURLs.append(catURL(rootURL[:-1], link.get('href')))
+            articleURLs.append(catURL(rootURL, link.get('href')))
 
     return(articleURLs)
 
