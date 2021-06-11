@@ -37,11 +37,9 @@ def getProfiles():
 
     return profiles
 
-def RSSArticleURLs(RSSPath):
-    print(RSSPath)
-
+def RSSArticleURLs(RSSURL):
     # Parse the whole RSS feed
-    RSSFeed = feedparser.parse(RSSPath)
+    RSSFeed = feedparser.parse(RSSURL)
 
     # List for holding the urls from the RSS feed
     articleURLs = list()
@@ -64,11 +62,18 @@ def scrapeArticleURLs(rootURL, frontPageURL, scrapingTargets):
     # Parsing the source code from the site to a soup
     frontPageSoup = BeautifulSoup(frontPage.content, 'html.parser')
 
-    # Looping through the first 10 of the elements that in the profile has been specified by element type and class to contain the links we want. Only first 10 due to same reason in RSSArticleURLs
-    for linkContainer in itertools.islice(frontPageSoup.find_all(scrapingTargets['element'], class_=scrapingTargets['class']), 10):
+    # Some websites doesn't have a uniqe class for the links to the articles. If that's the case, we have to extract the elements around the link and the extract the link from those
+    if scrapingTargets['linkClass'] == "":
+        # Looping through the first 10 of the elements that in the profile has been specified by element type and class to contain the links we want. Only first 10 due to same reason in RSSArticleURLs
+        for linkContainer in itertools.islice(frontPageSoup.find_all(scrapingTargets['element'], class_=scrapingTargets['class']), 10):
 
-        # The URL specified in the source code will of course be without the domain and http information, so that get's prepended here too by removing the last / from the url since the path also contains one
-        articleURLs.append(rootURL[:-1] + linkContainer.find('a').get('href'))
+            # The URL specified in the source will ofc be without the domain and http information, so that get's prepended here too by removing the last / from the url since the path also contains one
+            articleURLs.append(catURL(rootURL[:-1], linkContainer.find('a').get('href')))
+
+    # Others do hovewer have a uniqe class for the links, and here we can just extract those
+    else:
+        for link in itertools.islice(frontPageSoup.find_all('a', class_=scrapingTargets['linkClass']), 10):
+            articleURLs.append(catURL(rootURL[:-1], link.get('href')))
 
     return(articleURLs)
 
@@ -80,12 +85,15 @@ def gatherArticleURLs():
     articleURLs = list()
 
     for profile in getProfiles():
+
+        print(profile)
+
         # Parsing the json properly
         profile = json.loads(profile)['source']
 
         # For those were the RSS feed is useful, that will be used
         if profile['retrivalMethod'] == "rss":
-            articleURLs.append(RSSArticleURLs(profile['newPath']))
+            articleURLs.append(RSSArticleURLs(profile['newsPath']))
 
         # For basically everything else scraping will be used
         elif profile['retrivalMethod'] == "scraping":

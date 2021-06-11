@@ -1,1 +1,1 @@
-{"source":{"name":"Hacker News","address":"https://news.ycombinator.com/","retrivalMethod":"rss","newPath":"https://hnrss.org/newest"}}
+{"source":{"name":"Hacker News","address":"https://news.ycombinator.com/","retrivalMethod":"scraping","newsPath":"https://news.ycombinator.com/","scrapingTargets":{"linkClass":"storylink","element":"tr","class":"athing"}}}
