@@ -6,6 +6,9 @@ import os
 # Used both for determing paths to a certain file/directory and opening files for quick reading
 from pathlib import Path
 
+# For manipulating lists in a way that's less memory intensive
+import itertools
+
 # The profiles mapping the different websites are in json format
 import json
 
@@ -27,6 +30,21 @@ def getProfiles():
         profiles.append(Path("./profiles/" + profile).read_text().strip())
 
     return profiles
+
+def RSSArticleURLs(RSSPath):
+    print(RSSPath)
+
+    # Parse the whole RSS feed
+    RSSFeed = feedparser.parse(RSSPath)
+
+    # List for holding the urls from the RSS feed
+    articleURLs = list()
+
+    # Extracting the urls only, as these are the only relevant information. Also only take the first 10, if more is given to only get the newest articles
+    for entry in itertools.islice(RSSFeed.entries, 10):
+        articleURLs.append(entry.id)
+
+    return articleURLs
 
 
 
