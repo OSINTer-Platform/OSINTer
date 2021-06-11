@@ -1,2 +1,8 @@
 # For reading the rss feeds
 feedparser
+
+# For scraping static sites
+requests
+
+# For parsing html
+beautifulsoup4
