@@ -47,6 +47,14 @@ def catURL(rootURL, relativePath):
     else:
         return rootURL[:-1] + relativePath
 
+# Function for taking an arbitrary string and convert it into one that can safely be used as a filename and for removing spaces as those can be a headache to deal with
+def fileSafeString(unsafeString):
+    allowedCharacthers = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
+    unsafeString = unsafeString.replace(" ", "-")
+    safeString = ''.join(c for c in unsafeString if c in allowedCharacthers)
+    return safeString
+
+
 # Function for using the class of a container along with the element type and class of desired html tag (stored in the contentDetails variable) to extract that specific tag. Data is found under the "scraping" class in the profiles.
 def locateContent(contentDetails, soup, multiple=False):
 
