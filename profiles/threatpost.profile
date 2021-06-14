@@ -14,7 +14,11 @@
         "element": "h1",
         "class": "c-article__title"
       },
-      "subtitle": "",
+      "subtitle": {
+        "containerClass": "c-article__intro",
+        "element": "p",
+        "class": ""
+      },
       "date": {
         "containerClass": "c-article__time",
         "element": "time",
