@@ -157,8 +157,13 @@ def gatherArticleURLs(profiles):
 
     return articleURLs
 
+def extractArticleDetails(contentDetails, soup):
+    # Collecting all the details from the article (title, subtitle, date and author
+    details = list()
+    for detail in contentDetails:
+        details.append(locateContent(contentDetails[detail], soup).get_text())
 
-gatherArticleURLs(getProfiles())
+    return details
 
 
 
