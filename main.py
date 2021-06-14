@@ -65,7 +65,7 @@ def locateContent(contentDetails, soup, multiple=False):
 
     # We only want the first entry for some things like date and author, but for the text, which is often split up into different <p> tags we want to return all of them
     if multiple:
-        return contentContainer.find_all(contentDetails['element'], class_=contentDetails['class'])
+        return contentContainer.find_all(contentDetails['element'].split(';'), class_=contentDetails['class'])
     else:
         return contentContainer.find(contentDetails['element'], class_=contentDetails['class'])
 
@@ -180,7 +180,7 @@ def extractArticleDetails(contentDetails, soup):
 
     return details
 
-def extractArticleText(textDetails, soup, clearText=False, delimiter='\n'):
+def extractArticleContent(textDetails, soup, clearText=False, delimiter='\n'):
     # Get the list with the <p> tags in it
     textList = locateContent(textDetails, soup, True)
 
