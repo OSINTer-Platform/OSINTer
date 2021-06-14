@@ -255,3 +255,19 @@ def createMDFile(sourceName, sourceURL, articleDetails, articleContent):
 
     # Returning the file name, so it possible to open it in obsidian using an URI
     return MDFileName
+
+# Function for moving the newly created markdown file into the obsidian vault, and opening it in obsidian
+def openInObsidian(vaultName, vaultPath, fileName):
+    # Firstly, move the file to the vault
+    os.rename(Path(fileName).resolve(), Path(vaultPath + fileName))
+
+    # Then encode vault and filename for url and remove the .md file extension from the file at the same time
+    encVaultName = requests.utils.quote(vaultName, safe='')
+    encFileName = requests.utils.quote(fileName[:-3], safe='')
+
+    # Construct the URI for opening obsidian:
+    URI = "obsidian://open?vault=" + encVaultName + "&file=" + encFileName
+
+    # And lastly open the file in obsidian by using an URI
+    driver = webdriver.Firefox()
+    driver.get(URI)
