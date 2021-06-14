@@ -32,9 +32,6 @@ def catURL(rootURL, relativePath):
     else:
         return rootURL[:-1] + relativePath
 
-
-
-
 # Function for reading all profile files and returning the content in a list
 def getProfiles():
     # Listing all the profiles by getting the OS indepentent path to profiles folder and listing files in it
@@ -92,15 +89,11 @@ def scrapeArticleURLs(rootURL, frontPageURL, scrapingTargets):
     return(articleURLs)
 
 
-def gatherArticleURLs():
-    # Get the contents of the different profiles
-    profiles = getProfiles()
+def gatherArticleURLs(profiles):
 
     articleURLs = list()
 
-    for profile in getProfiles():
-
-        print(profile)
+    for profile in profiles:
 
         # Parsing the json properly
         profile = json.loads(profile)['source']
@@ -113,7 +106,10 @@ def gatherArticleURLs():
         elif profile['retrivalMethod'] == "scraping":
             articleURLs.append(scrapeArticleURLs(profile['address'], profile['newsPath'], profile['scrapingTargets']))
 
-    print(articleURLs)
+    return articleURLs
 
 
-gatherArticleURLs()
+gatherArticleURLs(getProfiles())
+
+
+
