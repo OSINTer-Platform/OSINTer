@@ -48,12 +48,12 @@ def getProfiles():
 
     return profiles
 
-def RSSArticleURLs(RSSURL):
+def RSSArticleURLs(RSSURL, profileName):
     # Parse the whole RSS feed
     RSSFeed = feedparser.parse(RSSURL)
 
     # List for holding the urls from the RSS feed
-    articleURLs = list()
+    articleURLs = [profileName]
 
     # Extracting the urls only, as these are the only relevant information. Also only take the first 10, if more is given to only get the newest articles
     for entry in itertools.islice(RSSFeed.entries, 10):
@@ -61,11 +61,11 @@ def RSSArticleURLs(RSSURL):
 
     return articleURLs
 
-# Scraping targets is element and class of element in which the target url is stored
-def scrapeArticleURLs(rootURL, frontPageURL, scrapingTargets):
+# Scraping targets is element and class of element in which the target url is stored, and the profileName is prepended on the list, to be able to find the profile again when it's needed for scraping
+def scrapeArticleURLs(rootURL, frontPageURL, scrapingTargets, profileName):
 
     # List for holding the urls for the articles
-    articleURLs = list()
+    articleURLs = [profileName]
 
     # The raw source of the site
     frontPage = requests.get(frontPageURL)
@@ -100,11 +100,11 @@ def gatherArticleURLs(profiles):
 
         # For those were the RSS feed is useful, that will be used
         if profile['retrivalMethod'] == "rss":
-            articleURLs.append(RSSArticleURLs(profile['newsPath']))
+            articleURLs.append(RSSArticleURLs(profile['newsPath'], profile['profileName']))
 
         # For basically everything else scraping will be used
         elif profile['retrivalMethod'] == "scraping":
-            articleURLs.append(scrapeArticleURLs(profile['address'], profile['newsPath'], profile['scrapingTargets']))
+            articleURLs.append(scrapeArticleURLs(profile['address'], profile['newsPath'], profile['scrapingTargets'], profile['profileName']))
 
     return articleURLs
 
