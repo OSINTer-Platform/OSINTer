@@ -211,3 +211,47 @@ def scrapeArticle(profileName, articleURL):
     articleContent = extractArticleContent(currentProfile['scraping']['content'], articleSoup)
 
     return articleDetails, articleContent
+
+def createMDFile(sourceName, sourceURL, articleDetails, articleContent):
+
+    # Define the title
+    title = articleDetails[0]
+
+    # Define the subtitle too, if it exist
+    if articleDetails[1] != "Unknown":
+        subtitle = articleDetails[1]
+    else:
+        subtitle = ""
+
+    # Define the details section by creating markdown list with "+"
+    MDDetails = ""
+    detailLabels = ["Source: ", "Link: ", "Date: ", "Author: "]
+    for i,detail in enumerate([sourceName, sourceURL, articleDetails[2], articleDetails[3]]):
+        MDDetails += "+ " + detailLabels[i] + detail + '\n'
+
+    # Convert the scraped article to markdown
+    MDContent = markdownify(articleContent)
+
+    # And lastly, some tags (TODO)
+    MDTags = ""
+
+    # Creating a structure for the template
+    contentList = {
+        'title': title,
+        'subtitle': subtitle,
+        'information': MDDetails,
+        'articleContent': MDContent,
+        'tags': MDTags
+    }
+
+    # Converting the title of the article to a string that can be used as filename and then opening the file in append mode (will create file if it doesn't exist)
+    MDFileName = fileSafeString(articleDetails[0]) + ".md"
+
+    with open(Path("./markdownTemplate.md"), "r") as source:
+        sourceTemplate = Template(source.read())
+        filledTemplate = sourceTemplate.substitute(contentList)
+        with open(Path("./" + MDFileName), "w") as newMDFile:
+            newMDFile.write(filledTemplate)
+
+    # Returning the file name, so it possible to open it in obsidian using an URI
+    return MDFileName
