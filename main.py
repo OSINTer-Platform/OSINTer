@@ -18,11 +18,20 @@ import feedparser
 # Used for scraping static pages
 import requests
 
+# Used for dynamically scraping pages that aren't static
+from selenium import webdriver
+
+# Used for running the browser headlessly
+from selenium.webdriver.firefox.options import Options
+
 # For parsing html
 from bs4 import BeautifulSoup
 
 # For checking if string matches regex
 import re
+
+# Mainly used for sleeping
+import time
 
 
 # Function for intellegently adding the domain to a relative path on website depending on if the domain is already there
@@ -104,6 +113,29 @@ def scrapeArticleURLs(rootURL, frontPageURL, scrapingTargets, profileName):
             articleURLs.append(catURL(rootURL, link.get('href')))
 
     return(articleURLs)
+
+
+def scrapePageDynamic(pageURL, loadTime=5, headless=True):
+
+    # Setting the options for running the browser driver headlessly so it doesn't pop up when running the script
+    driverOptions = Options()
+    driverOptions.headless = headless
+
+    # Setup the webdriver with options
+    driver = webdriver.Firefox(options=driverOptions)
+
+    # Actually scraping the page
+    driver.get(pageURL)
+
+    # Sleeping a pre-specified time to let the driver actually render the page properly
+    time.sleep(loadTime)
+
+    # Getting the source code for the page
+    pageSource = driver.page_source
+
+    driver.quit()
+
+    return pageSource
 
 
 def gatherArticleURLs(profiles):
