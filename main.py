@@ -166,5 +166,17 @@ def extractArticleDetails(contentDetails, soup):
 
     return details
 
+def extractArticleText(textDetails, soup, clearText=False, delimiter='\n'):
+    # Get the list with the <p> tags in it
+    textList = locateContent(textDetails, soup, True)
 
+    assembledText = ""
 
+    # Loop through all the <p> tags, extract the text and add them to string with newline in between
+    for element in textList:
+        if clearText:
+            assembledText = assembledText + element.get_text() + delimiter
+        else:
+            assembledText = assembledText + str(element) + delimiter
+
+    return assembledText
