@@ -177,6 +177,8 @@ def extractArticleDetails(contentDetails, soup):
     for detail in contentDetails:
         if contentDetails[detail] != "":
             details.append(locateContent(contentDetails[detail], soup).get_text())
+        else:
+            details.append("Unknown")
 
     return details
 
