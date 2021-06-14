@@ -1,1 +1,0 @@
-{"source":{"name":"Hacker News","profileName":"hackernews","address":"https://news.ycombinator.com/","retrivalMethod":"scraping","newsPath":"https://news.ycombinator.com/","scrapingTargets":{"linkClass":"storylink","element":"tr","class":"athing"}}}
