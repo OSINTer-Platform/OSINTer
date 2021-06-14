@@ -3,8 +3,17 @@
 # Used for interacting with the file system
 import os
 
+# Mainly used for sleeping
+import time
+
 # Used both for determing paths to a certain file/directory and opening files for quick reading
 from pathlib import Path
+
+# For checking if string matches regex
+import re
+
+# For filling out the markdown template at last
+from string import Template
 
 # For manipulating lists in a way that's less memory intensive
 import itertools
@@ -27,11 +36,8 @@ from selenium.webdriver.firefox.options import Options
 # For parsing html
 from bs4 import BeautifulSoup
 
-# For checking if string matches regex
-import re
-
-# Mainly used for sleeping
-import time
+# For converting html to markdown
+from markdownify import markdownify
 
 
 # Function for intellegently adding the domain to a relative path on website depending on if the domain is already there

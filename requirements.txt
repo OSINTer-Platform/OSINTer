@@ -6,3 +6,9 @@ requests
 
 # For parsing html
 beautifulsoup4
+
+# For dynamicaly scraping pages
+selenium
+
+# For converting from html to markdown
+markdownify
