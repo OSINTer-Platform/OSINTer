@@ -196,3 +196,18 @@ def extractArticleContent(textDetails, soup, clearText=False, delimiter='\n'):
             assembledText = assembledText + str(element) + delimiter
 
     return assembledText
+
+# Function for scraping everything of relevans in an article
+def scrapeArticle(profileName, articleURL):
+
+    # First of all loading the rigth profile for the article
+    currentProfile = json.loads(getProfiles(profileName))
+
+    # Scraping the full source code for the article and parsing it to a soup
+    articleSource = scrapePageDynamic(articleURL)
+    articleSoup = BeautifulSoup(articleSource, 'html.parser')
+
+    articleDetails = extractArticleDetails(currentProfile['scraping']['details'], articleSoup)
+    articleContent = extractArticleContent(currentProfile['scraping']['content'], articleSoup)
+
+    return articleDetails, articleContent
