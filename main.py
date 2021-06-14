@@ -157,11 +157,12 @@ def gatherArticleURLs(profiles):
 
     return articleURLs
 
+# Function for collecting all the small details from the article (title, subtitle, date and author)
 def extractArticleDetails(contentDetails, soup):
-    # Collecting all the details from the article (title, subtitle, date and author
     details = list()
     for detail in contentDetails:
-        details.append(locateContent(contentDetails[detail], soup).get_text())
+        if contentDetails[detail] != "":
+            details.append(locateContent(contentDetails[detail], soup).get_text())
 
     return details
 
