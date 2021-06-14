@@ -32,6 +32,20 @@ def catURL(rootURL, relativePath):
     else:
         return rootURL[:-1] + relativePath
 
+# Function for using the class of a container along with the element type and class of desired html tag (stored in the contentDetails variable) to extract that specific tag. Data is found under the "scraping" class in the profiles.
+def locateContent(contentDetails, soup, multiple=False):
+
+    content = list()
+
+    # Getting the html tag that surrounds that tag we are interrested in
+    contentContainer = soup.find(class_=contentDetails['containerClass'])
+
+    # We only want the first entry for some things like date and author, but for the text, which is often split up into different <p> tags we want to return all of them
+    if multiple:
+        return contentContainer.find_all(contentDetails['element'], class_=contentDetails['class'])
+    else:
+        return contentContainer.find(contentDetails['element'], class_=contentDetails['class'])
+
 # Function for reading all profile files and returning the content in a list if given no argument, or for returning the contents of one profile if given an argument
 def getProfiles(profileName=""):
     # Listing all the profiles by getting the OS indepentent path to profiles folder and listing files in it
