@@ -265,7 +265,7 @@ def generateTags(clearTextList):
 
 
 
-def createMDFile(sourceName, sourceURL, articleDetails, articleContent):
+def createMDFile(sourceName, sourceURL, articleDetails, articleContent, articleTags):
 
     # Define the title
     title = articleDetails[0]
@@ -286,7 +286,7 @@ def createMDFile(sourceName, sourceURL, articleDetails, articleContent):
     MDContent = markdownify(articleContent)
 
     # And lastly, some tags (TODO)
-    MDTags = ""
+    MDTags = "[[" + "]] [[".join(articleTags) + "]]"
 
     # Creating a structure for the template
     contentList = {
