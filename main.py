@@ -134,7 +134,7 @@ def scrapeArticleURLs(rootURL, frontPageURL, scrapingTargets, profileName):
     return(articleURLs)
 
 
-def scrapePageDynamic(pageURL, loadTime=5, headless=True):
+def scrapePageDynamic(pageURL, loadTime=3, headless=True):
 
     # Setting the options for running the browser driver headlessly so it doesn't pop up when running the script
     driverOptions = Options()
@@ -203,10 +203,7 @@ def extractArticleContent(textDetails, soup, clearText=False, delimiter='\n'):
     return assembledText
 
 # Function for scraping everything of relevans in an article
-def scrapeArticle(profileName, articleURL):
-
-    # First of all loading the rigth profile for the article
-    currentProfile = json.loads(getProfiles(profileName))
+def scrapeArticle(currentProfile, articleURL):
 
     # Scraping the full source code for the article and parsing it to a soup
     articleSource = scrapePageDynamic(articleURL)
@@ -276,10 +273,13 @@ def createMDFile(sourceName, sourceURL, articleDetails, articleContent, articleT
     else:
         subtitle = ""
 
+    # Convert the link for the article to markdown format
+    MDSourceURL = "[article](" + sourceURL + ")"
+
     # Define the details section by creating markdown list with "+"
     MDDetails = ""
     detailLabels = ["Source: ", "Link: ", "Date: ", "Author: "]
-    for i,detail in enumerate([sourceName, sourceURL, articleDetails[2], articleDetails[3]]):
+    for i,detail in enumerate([sourceName, MDSourceURL, articleDetails[2], articleDetails[3]]):
         MDDetails += "+ " + detailLabels[i] + detail + '\n'
 
     # Convert the scraped article to markdown
@@ -324,3 +324,18 @@ def openInObsidian(vaultName, vaultPath, fileName):
     # And lastly open the file in obsidian by using an URI
     driver = webdriver.Firefox()
     driver.get(URI)
+
+def handleSingleArticle(vaultName, vaultPath, profileName, articleURL):
+
+    # Load the profile for the article
+    currentProfile = json.loads(getProfiles(profileName))
+
+    # Gather the needed information from the article
+    articleDetails, articleContent, articleClearText = scrapeArticle(currentProfile, articleURL)
+
+    # Generate the tags
+    articleTags = generateTags(cleanText(articleClearText))
+
+    # Create the markdown file
+    MDFileName = createMDFile(currentProfile['source']['name'], articleURL, articleDetails, articleContent, articleTags)
+    openInObsidian(vaultName, vaultPath, MDFileName)
