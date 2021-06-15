@@ -39,6 +39,8 @@ from bs4 import BeautifulSoup
 # For converting html to markdown
 from markdownify import markdownify
 
+# Used for normalising cleartext from articles
+import unicodedata
 
 # Function for intellegently adding the domain to a relative path on website depending on if the domain is already there
 def catURL(rootURL, relativePath):
@@ -213,6 +215,25 @@ def scrapeArticle(profileName, articleURL):
 
     return articleDetails, articleContent, articleClearText
 
+# Function for taking in text from article (or basically any source) and outputting a list of words cleaned for punctuation, sole numbers, double spaces and other things so that it can be used for text analyssis
+def cleanText(clearText):
+    # Normalizing the text, to remove weird characthers that sometimes pop up in webarticles
+    cleanClearText = unicodedata.normalize("NFKD", clearText)
+    # Removing all contractions and "'s" created in english by descriping possession
+    cleanClearText = re.sub(r'\'\S*', '', cleanClearText)
+    # Remove all characthers that isn't spaces, numbers or letters
+    cleanClearText = re.sub(r'[^\w\s-]', ' ', cleanClearText)
+    # Remove those words that are only numbers
+    cleanClearText = re.sub(r'\s\d*\s', ' ', cleanClearText)
+    # Remove line endings
+    cleanClearText = re.sub(r'\n', ' ', cleanClearText)
+    # Making sure there isn't anywhere with more than one consecutive space
+    cleanClearText = re.sub(r'\s\s', ' ', cleanClearText)
+
+    # Converting the cleaned cleartext to a list
+    clearTextList = cleanClearText.split(" ")
+
+    return clearTextList
 
 def createMDFile(sourceName, sourceURL, articleDetails, articleContent):
 
