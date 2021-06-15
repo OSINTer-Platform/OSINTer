@@ -179,6 +179,35 @@ def gatherArticleURLs(profiles):
 
     return articleURLs
 
+# Function for scraping OG tag from page
+def scrapeOGTags(URL):
+    pageSource = requests.get(URL)
+    pageSoup = BeautifulSoup(pageSource.content, 'html.parser')
+
+    OGTags = list()
+
+    for tag in ["og:title", "og:description", "og:image"]:
+        OGTags.append(pageSoup.find("meta", property=tag).get('content'))
+
+    return OGTags
+
+# Function used for creating json file used for creating the html file presenting the different articles to the user
+def JSONFromOGTags(profileName, URLList):
+    # Creating the data structure that will store the OG tags
+    OGTagCollection = {}
+    OGTagCollection[profileName] = []
+
+    for URL in URLList:
+        OGTags = scrapeOGTags(URL)
+        OGTagCollection[profileName].append({
+            'url'           : URL,
+            'title'         : OGTags[0],
+            'description'   : OGTags[1],
+            'image'         : OGTags[2]
+        })
+
+    return OGTagCollection
+
 # Function for collecting all the small details from the article (title, subtitle, date and author)
 def extractArticleDetails(contentDetails, soup):
     details = list()
