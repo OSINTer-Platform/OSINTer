@@ -68,11 +68,14 @@ def locateContent(contentDetails, soup, multiple=False):
     # Getting the html tag that surrounds that tag we are interrested in
     contentContainer = soup.find(class_=contentDetails['containerClass'])
 
-    # We only want the first entry for some things like date and author, but for the text, which is often split up into different <p> tags we want to return all of them
-    if multiple:
-        return contentContainer.find_all(contentDetails['element'].split(';'), class_=contentDetails['class'])
-    else:
-        return contentContainer.find(contentDetails['element'], class_=contentDetails['class'])
+    try:
+        # We only want the first entry for some things like date and author, but for the text, which is often split up into different <p> tags we want to return all of them
+        if multiple:
+            return contentContainer.find_all(contentDetails['element'].split(';'), class_=contentDetails['class'])
+        else:
+            return contentContainer.find(contentDetails['element'], class_=contentDetails['class'])
+    except:
+        return BeautifulSoup("Unknown", "html.parser")
 
 # Function for reading all profile files and returning the content in a list if given no argument, or for returning the contents of one profile if given an argument
 def getProfiles(profileName=""):
@@ -190,6 +193,9 @@ def extractArticleDetails(contentDetails, soup):
 def extractArticleContent(textDetails, soup, clearText=False, delimiter='\n'):
     # Get the list with the <p> tags in it
     textList = locateContent(textDetails, soup, True)
+
+    if textList == "Unknown":
+        raise Exception("Wasn't able to fetch the text for the following soup:" + str(soup))
 
     assembledText = ""
 
