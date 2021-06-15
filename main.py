@@ -207,10 +207,12 @@ def scrapeArticle(profileName, articleURL):
     articleSource = scrapePageDynamic(articleURL)
     articleSoup = BeautifulSoup(articleSource, 'html.parser')
 
-    articleDetails = extractArticleDetails(currentProfile['scraping']['details'], articleSoup)
-    articleContent = extractArticleContent(currentProfile['scraping']['content'], articleSoup)
+    articleDetails =    extractArticleDetails(currentProfile['scraping']['details'], articleSoup)
+    articleContent =    extractArticleContent(currentProfile['scraping']['content'], articleSoup)
+    articleClearText =  extractArticleContent(currentProfile['scraping']['content'], articleSoup, True)
 
-    return articleDetails, articleContent
+    return articleDetails, articleContent, articleClearText
+
 
 def createMDFile(sourceName, sourceURL, articleDetails, articleContent):
 
