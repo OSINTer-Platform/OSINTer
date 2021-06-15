@@ -39,6 +39,9 @@ from bs4 import BeautifulSoup
 # For converting html to markdown
 from markdownify import markdownify
 
+# For counting and finding the most frequently used words when generating tag
+from collections import Counter
+
 # Used for normalising cleartext from articles
 import unicodedata
 
@@ -234,6 +237,33 @@ def cleanText(clearText):
     clearTextList = cleanClearText.split(" ")
 
     return clearTextList
+
+# Function for taking in a list of words, and generating tags based on that. Does this by finding the words that doesn't appear in a wordlist (which means they probably have some technical relevans) and then sort them by how often they're used. The input should be cleaned with cleanText
+def generateTags(clearTextList):
+
+    # List containing words that doesn't exist in the wordlist
+    uncommonWords = list()
+
+    # Generating set of all words in the wordlist
+    wordlist = set(line.strip() for line in open("./wordlist.txt", "r"))
+
+    # Find all the words that doesn't exist in the normal english dictionary (since those are the names and special words that we want to use as tags)
+    for word in clearTextList:
+        if word.lower() not in wordlist and word != "":
+            uncommonWords.append(word)
+
+    # Take the newly found words, sort by them by frequency and take the 10 most used
+    sortedByFreq = [word for word in Counter(uncommonWords).most_common(10)]
+
+    # only use those who have 3 mentions or more
+    tagList = list()
+    for wordCount in sortedByFreq:
+        if wordCount[1] > 2:
+            tagList.append(wordCount[0])
+
+    return tagList
+
+
 
 def createMDFile(sourceName, sourceURL, articleDetails, articleContent):
 
