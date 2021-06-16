@@ -182,6 +182,9 @@ def gatherArticleURLs(profiles):
 # Function for scraping OG tag from page
 def scrapeOGTags(URL):
     pageSource = requests.get(URL)
+    if pageSource.status_code != 200:
+        print("Error: Status code " + str(pageSource.status_code) + ", skipping URL: " + URL)
+        return []
     pageSoup = BeautifulSoup(pageSource.content, 'html.parser')
 
     OGTags = list()
@@ -199,12 +202,13 @@ def JSONFromOGTags(profileName, URLList):
 
     for URL in URLList:
         OGTags = scrapeOGTags(URL)
-        OGTagCollection[profileName].append({
-            'url'           : URL,
-            'title'         : OGTags[0],
-            'description'   : OGTags[1],
-            'image'         : OGTags[2]
-        })
+        if OGTags != []:
+            OGTagCollection[profileName].append({
+                'url'           : URL,
+                'title'         : OGTags[0],
+                'description'   : OGTags[1],
+                'image'         : OGTags[2]
+            })
 
     return OGTagCollection
 
@@ -321,7 +325,7 @@ def createMDFile(sourceName, sourceURL, articleDetails, articleContent, articleT
     MDContent = markdownify(articleContent)
 
     # And lastly, some tags (TODO)
-    MDTags = "[[" + "]] [[".join(articleTags) + "]]"
+    MDTags = "[[" + "]] [[".join(articleTags) + "]] [[" + sourceName + "]]"
 
     # Creating a structure for the template
     contentList = {
