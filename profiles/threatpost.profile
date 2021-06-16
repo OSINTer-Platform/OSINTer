@@ -26,8 +26,8 @@
       },
       "author": {
         "containerClass": "c-article__author",
-        "element": "span",
-        "class": ""
+        "element": "a",
+        "class": "c-article__author-name"
       }
     },
     "content": {
