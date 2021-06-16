@@ -234,6 +234,13 @@ def scrambleOGTags(OGTagCollection):
 
     return(scrambledTags)
 
+# Function used for constructing the CSS and HTML needed for the front end used for presenting the users with the different articles
+def constructArticleOverview(OGTags):
+    HTML = ""
+    CSS = ""
+    for i,article in enumerate(OGTags):
+        HTML += '<article id="card-' + str(i) + '"><a href="' + article['url'] + '"><h1>' + article['title'] + '</h1></a></article>\n'
+        CSS += '#card-' + str(i) + '::before { background-image: url(' + article['image'] + ');}\n'
 
 # Function for collecting all the small details from the article (title, subtitle, date and author)
 def extractArticleDetails(contentDetails, soup):
