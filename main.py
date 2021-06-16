@@ -194,8 +194,8 @@ def scrapeOGTags(URL):
 
     return OGTags
 
-# Function used for creating json file used for creating the html file presenting the different articles to the user
-def JSONFromOGTags(profileName, URLList):
+# Function used for ordering the OG tags into a dictionary based on source, that can then be used later
+def collectOGTags(profileName, URLList):
     # Creating the data structure that will store the OG tags
     OGTagCollection = {}
     OGTagCollection[profileName] = []
@@ -204,6 +204,7 @@ def JSONFromOGTags(profileName, URLList):
         OGTags = scrapeOGTags(URL)
         if OGTags != []:
             OGTagCollection[profileName].append({
+                'source'        : profileName,
                 'url'           : URL,
                 'title'         : OGTags[0],
                 'description'   : OGTags[1],
