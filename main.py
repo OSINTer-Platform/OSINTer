@@ -36,6 +36,9 @@ from selenium.webdriver.firefox.options import Options
 # For parsing html
 from bs4 import BeautifulSoup
 
+# For generating random numbers for scrambling the article overview
+import random
+
 # For converting html to markdown
 from markdownify import markdownify
 
@@ -212,6 +215,25 @@ def collectOGTags(profileName, URLList):
             })
 
     return OGTagCollection
+
+# Function used for scrambling the OG tags. The reason the URLs isn't simply scrambled before scrapping the OG tags and thereby making the proccess of scramblin them a lot simpler, is that this will scramble the source, but the newest articles will still be first.
+def scrambleOGTags(OGTagCollection):
+    # The list of the scrambled OG tags that will be returned
+    scrambledTags = list()
+
+    while OGTagCollection != {}:
+        # Choosing a random source (eg. bleepingcomputer or zdnet or something else)
+        randomSource = random.choice(" ".join(OGTagCollection).split())
+
+        # Moves the newest article from a random source from the ordered list to the scrambled
+        scrambledTags.append(OGTagCollection[randomSource].pop(0))
+
+        # Checks if individual list is empty and removing it if it is
+        if OGTagCollection[randomSource] == []:
+            del OGTagCollection[randomSource]
+
+    return(scrambledTags)
+
 
 # Function for collecting all the small details from the article (title, subtitle, date and author)
 def extractArticleDetails(contentDetails, soup):
