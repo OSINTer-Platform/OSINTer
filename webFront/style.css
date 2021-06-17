@@ -1,0 +1,224 @@
+
+body {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 100%;
+	margin: 0;
+}
+
+body > * {
+	width: 100%;
+}
+
+#expand-checkbox:checked ~ #top-container {
+	min-height: 100vh;
+	flex-shrink: 0;
+
+	display: flex;
+	flex-direction: column;
+}
+
+#expand-checkbox:checked ~ * #introduction {
+	flex-grow: 1;
+	margin: 0 auto;
+	padding: 1ch 3ch;
+	max-width: 100vw;
+}
+
+#expand-checkbox:checked ~ * #introduction h1 {
+	text-align: center;
+	font-family: Microsoft JhengHei Bold, Calibri Light, Courier New, Comic Sans MS, Arial, Sans-serif;
+}
+
+#expand-checkbox:checked ~ * header {
+	height: 4.5cm;
+}
+
+#expand-checkbox:checked ~ #cards {
+	display: none;
+}
+
+#expand-checkbox:not(:checked) ~ * #introduction {
+	display:none;
+}
+
+header {
+	display: flex;
+
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+
+	box-sizing: border-box;
+
+	width: 100%;
+	height: 3cm;
+	padding: 1em 2em;
+
+	font-family: 'Calibri',sans-serif;
+}
+
+header > * {
+	display: block;
+}
+
+header > :not(#logo) {
+	flex-basis: calc(100% / 3);
+}
+
+#expand-checkbox {
+	display: none;
+}
+
+#expand-icon {
+	display: block;
+
+	background-image: url(pil.png);
+	background-position: center;
+	border: none;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-color: unset;
+
+	height: 4.5ex;
+	width: 4.5ex;
+	background-size: contain;
+
+	transform: none;
+	transition: transform 0.4s;
+}
+
+#expand-icon:hover {
+	background-color: #eeeeee;
+}
+
+#expand-checkbox:checked ~ * #expand-icon {
+	transform: rotate(-180deg);
+	transition: transform 0.4s;
+}
+
+#links {
+	margin: 0;
+	padding: 0;
+	text-align: right;
+}
+
+#links > li{
+	display: inline-block;
+	margin: 0 1ch;
+}
+
+#links img {
+	height: 2.75ex;
+}
+
+#logo {
+	align-self: start;
+	height: 3.9cm;
+
+	padding: 0 2em;
+
+	text-align: center;
+
+	background-color: white;
+
+	text-transform: uppercase;
+
+	clip-path: ellipse(calc(3.3cm * 1.6) calc(3.3cm/1.8) at center);
+}
+
+#logo > :nth-child(2) {
+	margin-top: -0.25em;
+	font-size: 0.725em;
+	font-weight: lighter;
+	letter-spacing: 0.025em;
+}
+
+#logo > * {
+	margin: 0;
+}
+
+#logo img {
+	width: 2.5cm;
+	height: auto;
+}
+
+#cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(12cm, 100%), 1fr));
+	grid-auto-rows: min(6cm, 33vw);
+	flex-grow: 1;
+}
+
+#cards > article {
+	position:relative;
+	background-position: center;
+	background-size: 100%;
+	background-origin: padding-box;
+	background-repeat: no-repeat;
+	background-clip: padding-box;
+	transition: background-size 0.25s ease-out;
+}
+
+#cards > article > a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	text-decoration: unset;
+
+	display: flex;
+	align-items: center;
+	justify-content: center
+}
+
+#cards > article > a > * {
+	font-weight: unset;
+	margin: auto 10%;
+	color: white;
+	text-align: center;
+}
+
+#cards > article::before{
+
+	width: 100%;
+	height: 100%;
+	display: block;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-size: 100%;
+	z-index: -1;
+	background-origin: padding-box;
+	background-repeat: no-repeat;
+	background-clip: padding-box;
+	background-position: center;
+	filter:blur(3px) brightness(85%);
+	transition: background-size 0.25s ease-out;
+}
+
+#cards > article:hover::before {
+	background-size: 110%;
+	filter:none;
+	transition: background-size 0.25s ease-in filter 0.5s ease-in;
+}
+
+#cards > article > a > h1{
+	font-family: Microsoft JhengHei UI Light, Calibri Light, Courier New, Comic Sans MS, Arial, Sans-serif;
+	text-shadow: 3px 3px 3px #000000;
+	font-size: 1.75em;
+	filter: none;
+	transition: filter 0.25s ease-in;
+}
+
+#cards > article:hover > a > h1{
+	filter: blur(5px);
+}
+
+@keyframes display-none-transition {
+	0% {
+		opacity: 0;
+	}
+}
+
