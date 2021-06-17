@@ -199,13 +199,23 @@ def scrapeOGTags(URL):
 
 # Function used for ordering the OG tags into a dictionary based on source, that can then be used later
 def collectOGTags(profileName, URLList):
+
+    # Gets the name of the news media
+    siteName = json.loads(getProfiles(profileName))['source']['name']
+
     # Creating the data structure that will store the OG tags
     OGTagCollection = {}
     OGTagCollection[profileName] = []
 
+    # Looping through each URL for the articles, scraping the OG tags for those articles and then adding them to the final data structure
     for URL in URLList:
         OGTags = scrapeOGTags(URL)
         if OGTags != []:
+            # If the sitename isn't in the title, it will be added now
+            if siteName.lower() not in OGTags[0].lower():
+                OGTags[0] += " | " + siteName
+
+            # The og tag details will then be written to the final data structure
             OGTagCollection[profileName].append({
                 'source'        : profileName,
                 'url'           : URL,
