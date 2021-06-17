@@ -242,6 +242,23 @@ def constructArticleOverview(OGTags):
         HTML += '<article id="card-' + str(i) + '"><a href="' + article['url'] + '"><h1>' + article['title'] + '</h1></a></article>\n'
         CSS += '#card-' + str(i) + '::before { background-image: url(' + article['image'] + ');}\n'
 
+
+    # Make template for HTML file
+    contentList = {
+        'CSS': CSS,
+        'HTML': HTML
+    }
+
+    # Open the template for the HTML file
+    with open(Path("./webFront/index.html"), "r") as source:
+        # Read the template file
+        sourceTemplate = Template(source.read())
+        # Load the template but fill in the values from contentList
+        filledTemplate = sourceTemplate.substitute(contentList)
+        # Write the filled template to a new file that can then be opened
+        with open(Path("./webFront/overview.html"), "w") as newHTMLFile:
+            newHTMLFile.write(filledTemplate)
+
 # Function for collecting all the small details from the article (title, subtitle, date and author)
 def extractArticleDetails(contentDetails, soup):
     details = list()
