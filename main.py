@@ -457,7 +457,7 @@ def handleSingleArticle(vaultName, vaultPath, profileName, articleSource, articl
     openInObsidian(vaultName, vaultPath, MDFileName)
 
 # Function for scraping the the news front side, gather a lot of urls for articles and then present them in an overview
-def getSpecificArticle():
+def scrapeAndPresent():
     articleURLLists = gatherArticleURLs(getProfiles())
 
     OGTagCollection = {}
@@ -469,6 +469,11 @@ def getSpecificArticle():
 
     # Constructing the article overview HTML file
     articleOverviewPath = constructArticleOverview(scrambleOGTags(OGTagCollection), "./webFront/overview.html")
+
+    # Present the article and grap the driver so the source for the article the user navigates to can be scraped.
+    driver = presentArticleOverview(articleOverviewPath)
+
+    return driver
 
 # Dump function for just downloading all the articles the program can scrape
 def downloadBulk():
