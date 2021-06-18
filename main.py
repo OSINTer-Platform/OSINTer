@@ -440,8 +440,7 @@ def openInObsidian(vaultName, vaultPath, fileName):
     URI = "obsidian://open?vault=" + encVaultName + "&file=" + encFileName
 
     # And lastly open the file in obsidian by using an URI
-    driver = webdriver.Firefox()
-    driver.get(URI)
+    os.system("xdg-open '" + URI + "'")
 
 def handleSingleArticle(vaultName, vaultPath, profileName, articleSource, articleURL):
 
