@@ -320,10 +320,9 @@ def extractArticleContent(textDetails, soup, clearText=False, delimiter='\n'):
     return assembledText
 
 # Function for scraping everything of relevans in an article
-def scrapeArticle(currentProfile, articleURL):
+def scrapeArticle(currentProfile, articleSource):
 
-    # Scraping the full source code for the article and parsing it to a soup
-    articleSource = scrapePageDynamic(articleURL)
+    # Parsing full source code for the article to a soup
     articleSoup = BeautifulSoup(articleSource, 'html.parser')
 
     articleDetails =    extractArticleDetails(currentProfile['scraping']['details'], articleSoup)
@@ -439,16 +438,18 @@ def openInObsidian(vaultName, vaultPath, fileName):
     URI = "obsidian://open?vault=" + encVaultName + "&file=" + encFileName
 
     # And lastly open the file in obsidian by using an URI
-    driver = webdriver.Firefox()
-    driver.get(URI)
+    #driver = webdriver.Firefox()
+    #driver.get(URI)
+    print(URI)
+    os.system("xdg-open '" + URI + "'")
 
-def handleSingleArticle(vaultName, vaultPath, profileName, articleURL):
+def handleSingleArticle(vaultName, vaultPath, profileName, articleSource, articleURL):
 
     # Load the profile for the article
     currentProfile = json.loads(getProfiles(profileName))
 
     # Gather the needed information from the article
-    articleDetails, articleContent, articleClearText = scrapeArticle(currentProfile, articleURL)
+    articleDetails, articleContent, articleClearText = scrapeArticle(currentProfile, articleSource)
 
     # Generate the tags
     articleTags = generateTags(cleanText(articleClearText))
@@ -478,4 +479,4 @@ def downloadBulk():
     for URLlist in articleURLLists:
         currentProfile = URLlist.pop(0)
         for url in URLlist:
-            handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, url)
+            handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, requests.get(url).content, url)
