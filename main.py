@@ -251,7 +251,7 @@ def scrambleOGTags(OGTagCollection):
     return(scrambledTags)
 
 # Function used for constructing the CSS and HTML needed for the front end used for presenting the users with the different articles
-def constructArticleOverview(OGTags):
+def constructArticleOverview(OGTags, pathToNewOverview):
     HTML = ""
     CSS = ""
     for i,article in enumerate(OGTags):
@@ -272,8 +272,11 @@ def constructArticleOverview(OGTags):
         # Load the template but fill in the values from contentList
         filledTemplate = sourceTemplate.substitute(contentList)
         # Write the filled template to a new file that can then be opened
-        with open(Path("./webFront/overview.html"), "w") as newHTMLFile:
+        with open(Path(pathToNewOverview), "w") as newHTMLFile:
             newHTMLFile.write(filledTemplate)
+
+    # Returning the path so it can be used for showing the new HTML file
+    return pathToNewOverview
 
 def presentArticleOverview(path):
 
@@ -466,7 +469,7 @@ def getSpecificArticle():
         OGTagCollection[currentProfile] = collectOGTags(currentProfile, URLList)[currentProfile]
 
     # Constructing the article overview HTML file
-    constructArticleOverview(scrambleOGTags(OGTagCollection))
+    articleOverviewPath = constructArticleOverview(scrambleOGTags(OGTagCollection), "./webFront/overview.html")
 
 # Dump function for just downloading all the articles the program can scrape
 def downloadBulk():
