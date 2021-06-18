@@ -492,6 +492,12 @@ def handleBrowserDriver(driver):
     else:
         print("Problem, URL: " + str(pageURL))
 
+def main():
+    driver = scrapeAndPresent()
+    handleBrowserDriver(driver)
+
+main()
+
 # Dump function for just downloading all the articles the program can scrape
 def downloadBulk():
     articleURLLists = gatherArticleURLs(getProfiles())
