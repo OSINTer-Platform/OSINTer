@@ -48,9 +48,15 @@ from collections import Counter
 # Used for normalising cleartext from articles
 import unicodedata
 
+def checkIfURL(URL):
+    if re.match(r"https?:\/\/.*\..*", URL):
+        return True
+    else:
+        return False
+
 # Function for intellegently adding the domain to a relative path on website depending on if the domain is already there
 def catURL(rootURL, relativePath):
-    if re.match(r"https?:\/\/.*\..*", relativePath):
+    if checkIfURL(relativePath):
         return relativePath
     else:
         return rootURL[:-1] + relativePath
