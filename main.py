@@ -275,6 +275,18 @@ def constructArticleOverview(OGTags):
         with open(Path("./webFront/overview.html"), "w") as newHTMLFile:
             newHTMLFile.write(filledTemplate)
 
+def presentArticleOverview(path):
+
+    print(Path(path).resolve())
+    # Setup the webdriver
+    driver = webdriver.Firefox()
+
+    # Present the article
+    driver.get("file://" + str(Path(path).resolve()))
+
+    # Return the driver so the source code for when the user navigates to an article can be gathered
+    return driver
+
 # Function for collecting all the small details from the article (title, subtitle, date and author)
 def extractArticleDetails(contentDetails, soup):
     details = list()
