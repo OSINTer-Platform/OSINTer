@@ -27,6 +27,8 @@ import feedparser
 # Used for scraping static pages
 import requests
 
+import selenium
+
 # Used for dynamically scraping pages that aren't static
 from selenium import webdriver
 
@@ -474,6 +476,21 @@ def scrapeAndPresent():
     driver = presentArticleOverview(articleOverviewPath)
 
     return driver
+
+def handleBrowserDriver(driver):
+    while True:
+        try:
+            temp = driver.window_handles
+            pageSource = driver.page_source
+            pageURL = driver.current_url
+        except selenium.common.exceptions.WebDriverException as e:
+            break
+        time.sleep(1)
+
+    if checkIfURL(pageURL):
+        handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", "zdnet", pageSource, pageURL)
+    else:
+        print("Problem, URL: " + str(pageURL))
 
 # Dump function for just downloading all the articles the program can scrape
 def downloadBulk():
