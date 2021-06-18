@@ -435,3 +435,17 @@ def handleSingleArticle(vaultName, vaultPath, profileName, articleURL):
     # Create the markdown file
     MDFileName = createMDFile(currentProfile['source']['name'], articleURL, articleDetails, articleContent, articleTags)
     openInObsidian(vaultName, vaultPath, MDFileName)
+
+# Function for scraping the the news front side, gather a lot of urls for articles and then present them in an overview
+def getSpecificArticle():
+    articleURLLists = gatherArticleURLs(getProfiles())
+
+    OGTagCollection = {}
+    for URLList in articleURLLists:
+        # Getting the name of the current profile, which is stored in the start of each of the lists with URLs for the different news sites
+        currentProfile = URLList.pop(0)
+        # Getting the relevant part of the dictionary created by collectOGTags
+        OGTagCollection[currentProfile] = collectOGTags(currentProfile, URLList)[currentProfile]
+
+    # Constructing the article overview HTML file
+    constructArticleOverview(scrambleOGTags(OGTagCollection))
