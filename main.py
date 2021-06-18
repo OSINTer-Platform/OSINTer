@@ -449,3 +449,12 @@ def getSpecificArticle():
 
     # Constructing the article overview HTML file
     constructArticleOverview(scrambleOGTags(OGTagCollection))
+
+# Dump function for just downloading all the articles the program can scrape
+def downloadBulk():
+    articleURLLists = gatherArticleURLs(getProfiles())
+
+    for URLlist in articleURLLists:
+        currentProfile = URLlist.pop(0)
+        for url in URLlist:
+            handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, url)
