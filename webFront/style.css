@@ -223,6 +223,9 @@ header > :not(#logo) {
 }
 
 
+#gallery-container {
+	margin-top: 13vh;
+}
 
 div.gallery {
 	margin: 1.0vw;
@@ -236,16 +239,18 @@ div.gallery {
 }
 
 div.desc h2 {
-	font-size: 1vw;
+	font-size: 1.1vw;
+	font-family: Tahoma, Sans-serif;
 }
 
 div.desc p {
 	font-size: 0.7vw;
+	font-family: Georgia, serif;
 }
 
 div.gallery img {
 	width: 100%;
-	height: 90%;
+	height: 100%;
 	object-fit: cover;
 	position: relative;
 	z-index: 1;
@@ -254,18 +259,19 @@ div.gallery img {
 
 div.desc {
 	position: relative;
-	bottom: 40px;
+	bottom: 5vw;
 	z-index: 2;
 	padding: 10px;
-	padding-top: 0px;
+	padding-top: 1px;
 	text-align: center;
-	height: 200px;
 	background-color: #ffffff;
-	transition: bottom 300ms;
+	opacity: 0.9;
+	backdrop-filter: blur(20px);
+	transition: bottom 300ms, opacity 350ms;
 }
 
 div.gallery:hover {
-	border: 1px solid #000000;
+	border: 1px solid #525252;
 	box-shadow: 5px 10px 18px #888888;
 }
 
@@ -275,6 +281,6 @@ div.gallery:hover img {
 }
 
 div.gallery:hover div.desc {
-	bottom: 120px;
+	bottom: 16vw;
+	opacity: 0.75;
 }
-
