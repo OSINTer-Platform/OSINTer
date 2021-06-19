@@ -155,7 +155,7 @@ def scrapePageDynamic(pageURL, loadTime=3, headless=True):
     driverOptions.headless = headless
 
     # Setup the webdriver with options
-    driver = webdriver.Firefox(options=driverOptions)
+    driver = webdriver.Firefox(options=driverOptions, executable_path=Path("./geckodriver").resolve())
 
     # Actually scraping the page
     driver.get(pageURL)
@@ -284,7 +284,7 @@ def presentArticleOverview(path):
 
     print(Path(path).resolve())
     # Setup the webdriver
-    driver = webdriver.Firefox()
+    driver = webdriver.Firefox(executable_path=Path("./geckodriver").resolve())
 
     # Present the article
     driver.get("file://" + str(Path(path).resolve()))
