@@ -28,7 +28,7 @@
     },
     "content": {
       "containerClass": "articleBody",
-      "element": "p;h2;img;blockquote",
+      "element": "p;h2;h3;img;blockquote;a",
       "class": ""
     }
   }

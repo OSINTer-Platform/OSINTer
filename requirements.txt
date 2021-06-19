@@ -12,3 +12,6 @@ selenium
 
 # For converting from html to markdown
 markdownify
+
+# For parsing urls
+urllib3
