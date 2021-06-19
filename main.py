@@ -260,7 +260,10 @@ def constructArticleOverview(OGTags, pathToNewOverview):
     HTML = ""
     CSS = ""
     for i,article in enumerate(OGTags):
-        HTML += '<article id="card-' + str(i) + '"><a href="' + article['url'] + '?OSINTwProfile=' + article['profile'] + '"><h1>' + article['title'] + '</h1></a></article>\n'
+        # If there's already a paramater in the url it will add the OSINTwProfile parameter with &, otherwise it will simply use ?
+        # OSINTwProfile is used when scraping the website, to know what profile is associated with the article the user choose
+        URL = article['url'] + ('&' if parse.urlparse(article['url']).query else '?') + "OSINTwProfile=" + article['profile']
+        HTML += '<article id="card-' + str(i) + '"><a href="' + URL + '"><h1>' + article['title'] + '</h1></a></article>\n'
         CSS += '#card-' + str(i) + '::before { background-image: url(' + article['image'] + ');}\n'
 
 
