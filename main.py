@@ -35,6 +35,9 @@ from selenium import webdriver
 # Used for running the browser headlessly
 from selenium.webdriver.firefox.options import Options
 
+# Used for extracting get paramter from URL, for communicating the profile associated with an article
+from urllib import parse
+
 # For parsing html
 from bs4 import BeautifulSoup
 
@@ -225,7 +228,7 @@ def collectOGTags(profileName, URLList):
 
             # The og tag details will then be written to the final data structure
             OGTagCollection[profileName].append({
-                'source'        : profileName,
+                'profile'       : profileName,
                 'url'           : URL,
                 'title'         : OGTags[0],
                 'description'   : OGTags[1],
@@ -257,7 +260,7 @@ def constructArticleOverview(OGTags, pathToNewOverview):
     HTML = ""
     CSS = ""
     for i,article in enumerate(OGTags):
-        HTML += '<article id="card-' + str(i) + '"><a href="' + article['url'] + '"><h1>' + article['title'] + '</h1></a></article>\n'
+        HTML += '<article id="card-' + str(i) + '"><a href="' + article['url'] + '?OSINTwProfile=' + article['profile'] + '"><h1>' + article['title'] + '</h1></a></article>\n'
         CSS += '#card-' + str(i) + '::before { background-image: url(' + article['image'] + ');}\n'
 
 
@@ -291,6 +294,11 @@ def presentArticleOverview(path):
 
     # Return the driver so the source code for when the user navigates to an article can be gathered
     return driver
+
+# Function used for extracting the get parameter for the articles used for communicating the profile associated with an article
+def extractProfileParamater(URL):
+    parsedURL = parse.urlparse(URL)
+    return parse.parse_qs(parsedURL.query)['OSINTwProfile'][0]
 
 # Function for collecting all the small details from the article (title, subtitle, date and author)
 def extractArticleDetails(contentDetails, soup):
@@ -486,8 +494,10 @@ def handleBrowserDriver(driver):
             break
         time.sleep(1)
 
+    currentProfile = extractProfileParamater(pageURL)
+
     if checkIfURL(pageURL):
-        handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", "zdnet", pageSource, pageURL)
+        handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, pageSource, pageURL)
     else:
         print("Problem, URL: " + str(pageURL))
 
