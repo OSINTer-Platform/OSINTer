@@ -5,6 +5,7 @@
 		<title>OSINTw</title>
 		<link href="style.css" rel="stylesheet">
 		<meta name="viewport" content="width=device-width initial-scale=1" />
+		<script src="script.js"></script>
 
 		<style>
 			$CSS
@@ -16,10 +17,10 @@
 			<article id="introduction">
 			<!-- <h1>Title</h1> --!>
 				<div id="gallery-container">
-					<span class="arrow" id="left-arrow"></span>
+					<span class="arrow" id="left-arrow" onclick="arrowPress(true)"></span>
 					<div class="gallery">
-					  <a class="gallery-image" target="_blank" href="https://www.zdnet.com/a/hub/i/r/2021/03/17/c4a08ce7-4e67-4858-b0ad-d54184e5c61f/thumbnail/770x578/d4eb3e9ba4a7e9d02c052e6b9e09d32c/istock-682295824.jpg">
-					    <img src="https://www.zdnet.com/a/hub/i/r/2021/03/17/c4a08ce7-4e67-4858-b0ad-d54184e5c61f/thumbnail/770x578/d4eb3e9ba4a7e9d02c052e6b9e09d32c/istock-682295824.jpg" alt="Cinque Terre">
+					  <a class="article-link" href="https://www.zdnet.com/a/hub/i/r/2021/03/17/c4a08ce7-4e67-4858-b0ad-d54184e5c61f/thumbnail/770x578/d4eb3e9ba4a7e9d02c052e6b9e09d32c/istock-682295824.jpg">
+					    <img src="https://www.zdnet.com/a/hub/i/r/2021/03/17/c4a08ce7-4e67-4858-b0ad-d54184e5c61f/thumbnail/770x578/d4eb3e9ba4a7e9d02c052e6b9e09d32c/istock-682295824.jpg" class="article-image">
 					  </a>
 					  <div class="desc">
 					  <h2> Open-source security: Google has a new plan to stop software supply chain attacks | ZDNet </h2>
@@ -28,8 +29,8 @@
 					</div>
 
 					<div class="gallery">
-					  <a class="gallery-image" target="_blank" href="https://www.zdnet.com/a/hub/i/r/2020/10/22/be048984-362a-43e9-b9ec-468cd09d08c5/thumbnail/770x578/f065e4576113b9c9ad61b50c6d39cdf1/computeruseristock-1225841728a.jpg">
-					    <img src="https://www.zdnet.com/a/hub/i/r/2020/10/22/be048984-362a-43e9-b9ec-468cd09d08c5/thumbnail/770x578/f065e4576113b9c9ad61b50c6d39cdf1/computeruseristock-1225841728a.jpg" alt="Forest">
+					  <a class="article-link" href="https://www.zdnet.com/a/hub/i/r/2021/03/17/c4a08ce7-4e67-4858-b0ad-d54184e5c61f/thumbnail/770x578/d4eb3e9ba4a7e9d02c052e6b9e09d32c/istock-682295824.jpg">
+					    <img src="https://www.zdnet.com/a/hub/i/r/2020/10/22/be048984-362a-43e9-b9ec-468cd09d08c5/thumbnail/770x578/f065e4576113b9c9ad61b50c6d39cdf1/computeruseristock-1225841728a.jpg" class="article-image">
 					  </a>
 					  <div class="desc">
 					  <h2>Why improving diversity in cybersecurity is vital for everyone | ZDNet</h2>
@@ -38,15 +39,15 @@
 					</div>
 
 					<div class="gallery">
-					  <a class="gallery-image" target="_blank" href="https://www.bleepstatic.com/content/hl-images/2021/06/15/Win--11-flare.jpg">
-					    <img src="https://www.bleepstatic.com/content/hl-images/2021/06/15/Win--11-flare.jpg" alt="Northern Lights">
+					  <a class="article-link" href="https://www.zdnet.com/a/hub/i/r/2021/03/17/c4a08ce7-4e67-4858-b0ad-d54184e5c61f/thumbnail/770x578/d4eb3e9ba4a7e9d02c052e6b9e09d32c/istock-682295824.jpg">
+					    <img src="https://www.bleepstatic.com/content/hl-images/2021/06/15/Win--11-flare.jpg" class="article-image">
 					  </a>
 					  <div class="desc">
 					  <h2> Microsoft announces Windows developer event for June 24th | Bleeping Computer </h2>
 					  <p> Microsoft has announced an additional Windows developer event for June 24th that will likely reveal new programming API or Microsoft Store changes. </p>
 					  </div>
 					</div>
-					<span class="arrow" id="right-arrow"></span>
+					<span class="arrow" id="right-arrow" onclick="arrowPress(false)"></span>
 				</div>
 			</article>
 			<header>
