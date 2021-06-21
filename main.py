@@ -259,12 +259,22 @@ def scrambleOGTags(OGTagCollection):
 def constructArticleOverview(OGTags, pathToNewOverview):
     HTML = ""
     CSS = ""
+    JS = ""
+    # The JS variable contains the list for the following variables: articleURLs imageURLs, titles and descriptions. The string hardcoded into these right here is the name of the javascript arrays that each of these list in the JSList will create
+    JSList = [["articleURLs"],["imageURLs"],["titles"],["descriptions"]]
     for i,article in enumerate(OGTags):
         # If there's already a paramater in the url it will add the OSINTwProfile parameter with &, otherwise it will simply use ?
         # OSINTwProfile is used when scraping the website, to know what profile is associated with the article the user choose
         URL = article['url'] + ('&' if parse.urlparse(article['url']).query else '?') + "OSINTwProfile=" + article['profile']
         HTML += '<article id="card-' + str(i) + '"><a href="' + URL + '"><h1>' + article['title'] + '</h1></a></article>\n'
         CSS += '#card-' + str(i) + '::before { background-image: url(' + article['image'] + ');}\n'
+        JSList[0].append(URL)
+        JSList[1].append(article['image'])
+        JSList[2].append(article['title'])
+        JSList[3].append(article['description'])
+    
+    for currentJSList in JSList:
+        JS += 'const ' + currentJSList.pop(0) + ' = [ "' + currentJSList.pop(0) + '"' + "".join([(', "' + element + '"') for element in currentJSList]) + ' ]\n'
 
 
     # Make template for HTML file
@@ -282,6 +292,21 @@ def constructArticleOverview(OGTags, pathToNewOverview):
         # Write the filled template to a new file that can then be opened
         with open(Path(pathToNewOverview), "w") as newHTMLFile:
             newHTMLFile.write(filledTemplate)
+
+    # Make template for HTML file
+    contentList = {
+        'variables': JS,
+    }
+
+    # Open the template for the HTML file
+    with open(Path("./webFront/switchOverview.js"), "r") as source:
+        # Read the template file
+        sourceTemplate = Template(source.read())
+        # Load the template but fill in the values from contentList
+        filledTemplate = sourceTemplate.substitute(contentList)
+        # Write the filled template to a new file that can then be opened
+        with open(Path("./webFront/script.js"), "w") as newJSFile:
+            newJSFile.write(filledTemplate)
 
     # Returning the path so it can be used for showing the new HTML file
     return pathToNewOverview
