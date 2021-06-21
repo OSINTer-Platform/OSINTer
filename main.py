@@ -226,12 +226,12 @@ def collectOGTags(profileName, URLList):
             if siteName.lower() not in OGTags[0].lower():
                 OGTags[0] += " | " + siteName
 
-            # The og tag details will then be written to the final data structure
+            # The title and description will be cleaned for '"' since these can interfere with storing them in the needed arrays in the JS file and then the OG tag details will be written to the final data structure
             OGTagCollection[profileName].append({
                 'profile'       : profileName,
                 'url'           : URL,
-                'title'         : OGTags[0],
-                'description'   : OGTags[1],
+                'title'         : re.sub(r'"', '', OGTags[0]),
+                'description'   : re.sub(r'"', '', OGTags[1]),
                 'image'         : OGTags[2]
             })
 
