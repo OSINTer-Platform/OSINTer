@@ -500,15 +500,14 @@ def handleBrowserDriver(driver):
     currentProfile = extractProfileParamater(pageURL)
 
     if checkIfURL(pageURL):
-        handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, pageSource, pageURL)
+        return pageSource, pageURL, currentProfile
     else:
-        print("Problem, URL: " + str(pageURL))
+        raise Exception("Problem, URL: " + str(pageURL))
 
 def main():
     driver = scrapeAndPresent()
-    handleBrowserDriver(driver)
-
-main()
+    pageSource, pageURL, currentProfile = handleBrowserDriver(driver)
+    handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, pageSource, pageURL)
 
 # Dump function for just downloading all the articles the program can scrape
 def downloadBulk():
@@ -518,3 +517,4 @@ def downloadBulk():
         currentProfile = URLlist.pop(0)
         for url in URLlist:
             handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, requests.get(url).content, url)
+main()
