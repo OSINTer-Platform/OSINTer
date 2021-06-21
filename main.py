@@ -313,9 +313,13 @@ def constructArticleOverview(OGTags, pathToNewOverview):
 
 def presentArticleOverview(path):
 
-    print(Path(path).resolve())
-    # Setup the webdriver
-    driver = webdriver.Firefox(executable_path=Path("./geckodriver").resolve())
+    # Setup preferences for the webdriver that allows rendering of transparent blured elements
+    profile = webdriver.FirefoxProfile()
+    profile.set_preference("layout.css.backdrop-filter.enabled", True)
+    profile.set_preference("gfx.webrender.all", True)
+
+    # Setup the webdriver using the newly set profile and the path for the geckodriver
+    driver = webdriver.Firefox(executable_path=Path("./geckodriver").resolve(), firefox_profile=profile)
 
     # Present the article
     driver.get("file://" + str(Path(path).resolve()))
