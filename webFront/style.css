@@ -224,8 +224,10 @@ header > :not(#logo) {
 
 
 #gallery-container {
-	margin-top: 13vh;
+	margin-top: 5vw;
 }
+
+
 
 div.gallery {
 	margin: 1.0vw;
@@ -283,4 +285,41 @@ div.gallery:hover img {
 div.gallery:hover div.desc {
 	bottom: 16vw;
 	opacity: 0.75;
+}
+
+span.arrow {
+	position: relative;
+	display: block;
+
+	background-image: url(pil.png);
+	background-position: center;
+	border: none;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: unset;
+
+
+	height: 4.5ex;
+	width: 4.5ex;
+
+	transform: rotate(90deg);
+
+	display:table;
+	margin:0 auto;
+
+	position: absolute;
+	margin-top: 12vw;
+}
+
+span.arrow:hover {
+	background-color: #eeeeee;
+}
+
+#left-arrow{
+	transform: rotate(90deg);
+	left: 3%;
+}
+#right-arrow{
+	transform: rotate(-90deg);
+	left: 95%;
 }
