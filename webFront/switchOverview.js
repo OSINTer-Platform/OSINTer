@@ -1,4 +1,4 @@
-// Will contain the following variables: imageURLs, descriptions, titles and articleURLs 
+// Will contain the following variables: imageURLs, descriptions, titles and articleURLs
 $variables
 
 // Counter for knowing which article has been reached when pressing the left or right arrow
@@ -25,7 +25,7 @@ function changePreviews(currentNumber){
 function arrowPress(left) {
 	if (left == true) {
 		currentCounter = currentCounter - 3
-		
+
 		if (currentCounter < 0) {
 			currentCounter = (imageURLs.length - 1) + currentCounter
 		}
@@ -33,9 +33,14 @@ function arrowPress(left) {
 		changePreviews(currentCounter)
 
 	} else {
-		
+
 		currentCounter = (currentCounter + 3) % (imageURLs.length - 1)
 		changePreviews(currentCounter)
 
 	}
 }
+
+document.addEventListener('keydown', (event) => {
+	if (event.code == "ArrowLeft") arrowPress(true);
+	else if (event.code == "ArrowRight") arrowPress(false);
+});
