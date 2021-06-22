@@ -38,7 +38,8 @@
     "content": {
       "containerClass": "storyBody",
       "element": "p;h3;blockquote;img",
-      "class": ""
+      "class": "",
+	  "remove": ""
     }
   }
 }

@@ -102,6 +102,14 @@ def locateContent(contentDetails, soup, multiple=False):
     except:
         return BeautifulSoup("Unknown", "html.parser")
 
+# Function used for removing certain tags with or without class from a soup. Takes in a list of element tag and class in the format: "tag,class;tag,class;..."
+def cleanSoup(soup, HTMLTagsAndClasses):
+    for TagAndClass in HTMLTagsAndClasses.split(";"):
+        for tag in soup.find_all(TagAndClass.split(",")[0], class_=TagAndClass.split(",")[1]):
+            tag.decompose()
+
+    return soup
+
 # Function for reading all profile files and returning the content in a list if given no argument, or for returning the contents of one profile if given an argument
 def getProfiles(profileName=""):
     # Listing all the profiles by getting the OS indepentent path to profiles folder and listing files in it
@@ -327,8 +335,15 @@ def extractArticleDetails(contentDetails, soup):
     return details
 
 def extractArticleContent(textDetails, soup, clearText=False, delimiter='\n'):
+
+    # Clean the textlist for unwanted html elements
+    if textDetails['remove'] != "":
+        cleanedSoup = cleanSoup(soup, textDetails['remove'])
+        textList = locateContent(textDetails, cleanedSoup, True)
+    else:
+        textList = locateContent(textDetails, soup, True)
+
     # Get the list with the <p> tags in it
-    textList = locateContent(textDetails, soup, True)
 
     if textList == "Unknown":
         raise Exception("Wasn't able to fetch the text for the following soup:" + str(soup))
