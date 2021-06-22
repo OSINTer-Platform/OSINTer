@@ -73,6 +73,17 @@ def fileSafeString(unsafeString):
     safeString = ''.join(c for c in unsafeString if c in allowedCharacthers)
     return safeString
 
+def writeTemplateToFile(contentList, templateFile, newFile):
+    # Open the template for the given file
+    with open(Path(templateFile), "r") as source:
+        # Read the template file
+        sourceTemplate = Template(source.read())
+        # Load the template but fill in the values from contentList
+        filledTemplate = sourceTemplate.substitute(contentList)
+        # Write the filled template to a new file that can then be opened
+        with open(Path(newFile), "w") as newF:
+            newF.write(filledTemplate)
+
 
 # Function for using the class of a container along with the element type and class of desired html tag (stored in the contentDetails variable) to extract that specific tag. Data is found under the "scraping" class in the profiles.
 def locateContent(contentDetails, soup, multiple=False):
@@ -256,7 +267,7 @@ def scrambleOGTags(OGTagCollection):
     return(scrambledTags)
 
 # Function used for constructing the CSS and HTML needed for the front end used for presenting the users with the different articles
-def constructArticleOverview(OGTags, pathToNewOverview):
+def constructArticleOverview(OGTags):
     HTML = ""
     CSS = ""
     JS = ""
@@ -276,40 +287,12 @@ def constructArticleOverview(OGTags, pathToNewOverview):
     for currentJSList in JSList:
         JS += 'const ' + currentJSList.pop(0) + ' = [ "' + currentJSList.pop(0) + '"' + "".join([(', "' + element + '"') for element in currentJSList]) + ' ]\n'
 
-
     # Make template for HTML file
-    contentList = {
-        'CSS': CSS,
-        'HTML': HTML
-    }
+    writeTemplateToFile({'CSS': CSS, 'HTML': HTML}, "./webFront/index.html", "./webFront/overview.html")
 
-    # Open the template for the HTML file
-    with open(Path("./webFront/index.html"), "r") as source:
-        # Read the template file
-        sourceTemplate = Template(source.read())
-        # Load the template but fill in the values from contentList
-        filledTemplate = sourceTemplate.substitute(contentList)
-        # Write the filled template to a new file that can then be opened
-        with open(Path(pathToNewOverview), "w") as newHTMLFile:
-            newHTMLFile.write(filledTemplate)
+    # Make the template for the JS file
+    writeTemplateToFile({'variables': JS}, "./webFront/switchOverview.js", "./webFront/script.js")
 
-    # Make template for HTML file
-    contentList = {
-        'variables': JS,
-    }
-
-    # Open the template for the HTML file
-    with open(Path("./webFront/switchOverview.js"), "r") as source:
-        # Read the template file
-        sourceTemplate = Template(source.read())
-        # Load the template but fill in the values from contentList
-        filledTemplate = sourceTemplate.substitute(contentList)
-        # Write the filled template to a new file that can then be opened
-        with open(Path("./webFront/script.js"), "w") as newJSFile:
-            newJSFile.write(filledTemplate)
-
-    # Returning the path so it can be used for showing the new HTML file
-    return pathToNewOverview
 
 def presentArticleOverview(path):
 
@@ -458,11 +441,7 @@ def createMDFile(sourceName, sourceURL, articleDetails, articleContent, articleT
     # Converting the title of the article to a string that can be used as filename and then opening the file in append mode (will create file if it doesn't exist)
     MDFileName = fileSafeString(articleDetails[0]) + ".md"
 
-    with open(Path("./markdownTemplate.md"), "r") as source:
-        sourceTemplate = Template(source.read())
-        filledTemplate = sourceTemplate.substitute(contentList)
-        with open(Path("./" + MDFileName), "w") as newMDFile:
-            newMDFile.write(filledTemplate)
+    writeTemplateToFile(contentList, "./markdownTemplate.md", MDFileName)
 
     # Returning the file name, so it possible to open it in obsidian using an URI
     return MDFileName
@@ -509,10 +488,10 @@ def scrapeAndPresent():
         OGTagCollection[currentProfile] = collectOGTags(currentProfile, URLList)[currentProfile]
 
     # Constructing the article overview HTML file
-    articleOverviewPath = constructArticleOverview(scrambleOGTags(OGTagCollection), "./webFront/overview.html")
+    constructArticleOverview(scrambleOGTags(OGTagCollection))
 
     # Present the article and grap the driver so the source for the article the user navigates to can be scraped.
-    driver = presentArticleOverview(articleOverviewPath)
+    driver = presentArticleOverview("./webFront/overview.html")
 
     return driver
 
