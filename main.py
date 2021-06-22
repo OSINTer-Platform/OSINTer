@@ -86,7 +86,7 @@ def writeTemplateToFile(contentList, templateFile, newFile):
 
 
 # Function for using the class of a container along with the element type and class of desired html tag (stored in the contentDetails variable) to extract that specific tag. Data is found under the "scraping" class in the profiles.
-def locateContent(contentDetails, soup, multiple=False):
+def locateContent(contentDetails, soup, multiple=False, recursive=True):
 
     content = list()
 
@@ -96,9 +96,9 @@ def locateContent(contentDetails, soup, multiple=False):
     try:
         # We only want the first entry for some things like date and author, but for the text, which is often split up into different <p> tags we want to return all of them
         if multiple:
-            return contentContainer.find_all(contentDetails['element'].split(';'), class_=contentDetails['class'])
+            return contentContainer.find_all(contentDetails['element'].split(';'), class_=contentDetails['class'], recursive=recursive)
         else:
-            return contentContainer.find(contentDetails['element'], class_=contentDetails['class'])
+            return contentContainer.find(contentDetails['element'], class_=contentDetails['class'], recursive=recursive)
     except:
         return BeautifulSoup("Unknown", "html.parser")
 
@@ -339,9 +339,9 @@ def extractArticleContent(textDetails, soup, clearText=False, delimiter='\n'):
     # Clean the textlist for unwanted html elements
     if textDetails['remove'] != "":
         cleanedSoup = cleanSoup(soup, textDetails['remove'])
-        textList = locateContent(textDetails, cleanedSoup, True)
+        textList = locateContent(textDetails, cleanedSoup, True, True)
     else:
-        textList = locateContent(textDetails, soup, True)
+        textList = locateContent(textDetails, soup, True, True)
 
     # Get the list with the <p> tags in it
 
