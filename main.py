@@ -84,6 +84,20 @@ def writeTemplateToFile(contentList, templateFile, newFile):
         with open(Path(newFile), "w") as newF:
             newF.write(filledTemplate)
 
+# Function for determining whether the file presenting the article overview to the user needs to be refreshed, or if the relative old version can be use
+def overviewNeedsRefresh(overviewPath):
+    # Checking if file exists
+    if os.path.exists(Path(overviewPath)):
+        # Get last modification date of the article overview file as well as the current time, both in unix time
+        modTime = os.path.getmtime(Path(overviewPath))
+        currentTime = time.time()
+        # Checking if file is more than 2 hours old
+        if (currentTime - modTime) > (2 * 60 * 60):
+            return True
+        else:
+            return False
+    else:
+        return True
 
 # Function for using the class of a container along with the element type and class of desired html tag (stored in the contentDetails variable) to extract that specific tag. Data is found under the "scraping" class in the profiles.
 def locateContent(contentDetails, soup, multiple=False, recursive=True):
@@ -491,8 +505,8 @@ def handleSingleArticle(vaultName, vaultPath, profileName, articleSource, articl
     MDFileName = createMDFile(currentProfile['source']['name'], articleURL, articleDetails, articleContent, articleTags)
     openInObsidian(vaultName, vaultPath, MDFileName)
 
-# Function for scraping the the news front side, gather a lot of urls for articles and then present them in an overview
-def scrapeAndPresent():
+# Function for scraping the the news front side, gather a lot of urls for articles and then put them together in an overview
+def scrapeAndConstruct():
     articleURLLists = gatherArticleURLs(getProfiles())
 
     OGTagCollection = {}
@@ -505,10 +519,6 @@ def scrapeAndPresent():
     # Constructing the article overview HTML file
     constructArticleOverview(scrambleOGTags(OGTagCollection))
 
-    # Present the article and grap the driver so the source for the article the user navigates to can be scraped.
-    driver = presentArticleOverview("./webFront/overview.html")
-
-    return driver
 
 def handleBrowserDriver(driver):
     while True:
@@ -528,7 +538,15 @@ def handleBrowserDriver(driver):
         raise Exception("Problem, URL: " + str(pageURL))
 
 def main():
-    driver = scrapeAndPresent()
+    if overviewNeedsRefresh("./webFront/overview.html"):
+        print("Refreshing article overview")
+        scrapeAndConstruct()
+    else:
+        print("Using existing article overview")
+
+    # Present the article and grap the driver so the source for the article the user navigates to can be scraped.
+    driver = presentArticleOverview("./webFront/overview.html")
+
     pageSource, pageURL, currentProfile = handleBrowserDriver(driver)
     handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, pageSource, pageURL)
 
