@@ -31,7 +31,7 @@
       }
     },
     "content": {
-      "containerClass": "c-article__main",
+      "containerClass": "c-article__content",
       "element": "p;h2;img;blockquote",
       "class": "",
 	  "remove": "img,wp-image-141989",

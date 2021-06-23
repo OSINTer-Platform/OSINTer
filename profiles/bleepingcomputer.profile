@@ -28,7 +28,7 @@
     },
     "content": {
       "containerClass": "articleBody",
-      "element": "p;h2;h3;img;blockquote;a",
+      "element": "p;h2;h3;img;blockquote;a;ul;li;ol;div;figure",
       "class": "",
 	  "remove": "cnx,cnx-main-container cnx-in-desktop cnx-ps cnx-main-container-flex",
 	  "recursive": "False"
