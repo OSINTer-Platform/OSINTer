@@ -353,9 +353,9 @@ def extractArticleContent(textDetails, soup, clearText=False, delimiter='\n'):
     # Clean the textlist for unwanted html elements
     if textDetails['remove'] != "":
         cleanedSoup = cleanSoup(soup, textDetails['remove'])
-        textList = locateContent(textDetails, cleanedSoup, True, False)
+        textList = locateContent(textDetails, cleanedSoup, True, (textDetails['recursive'] == 'True'))
     else:
-        textList = locateContent(textDetails, soup, True, False)
+        textList = locateContent(textDetails, soup, True, (textDetails['recursive'] == 'True'))
 
     # Get the list with the <p> tags in it
 

@@ -30,7 +30,8 @@
       "containerClass": "articleBody",
       "element": "p;h2;h3;img;blockquote;a",
       "class": "",
-	  "remove": "cnx,cnx-main-container cnx-in-desktop cnx-ps cnx-main-container-flex"
+	  "remove": "cnx,cnx-main-container cnx-in-desktop cnx-ps cnx-main-container-flex",
+	  "recursive": "False"
     }
   }
 }

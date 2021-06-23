@@ -39,7 +39,8 @@
       "containerClass": "storyBody",
       "element": "p;h3;blockquote;img",
       "class": "",
-	  "remove": ""
+	  "remove": "",
+	  "recursive": "False"
     }
   }
 }

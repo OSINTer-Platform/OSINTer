@@ -34,7 +34,8 @@
       "containerClass": "c-article__main",
       "element": "p;h2;img;blockquote",
       "class": "",
-	  "remove": "img,wp-image-141989"
+	  "remove": "img,wp-image-141989",
+	  "recursive": "False"
     }
   }
 }
