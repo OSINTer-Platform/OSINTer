@@ -3,6 +3,9 @@
 # Used for interacting with the file system
 import os
 
+# Used for determining what os is running the script
+import sys
+
 # Mainly used for sleeping
 import time
 
@@ -487,8 +490,21 @@ def openInObsidian(vaultName, vaultPath, fileName):
     # Construct the URI for opening obsidian:
     URI = "obsidian://open?vault=" + encVaultName + "&file=" + encFileName
 
-    # And lastly open the file in obsidian by using an URI
-    os.system("xdg-open '" + URI + "'")
+    # And lastly open the file in obsidian by using an URI along with the open command for the currently used OS
+    platform = sys.platform
+
+    if platform.startswith('linux'):
+        openCommand = "xdg-open '" + URI + "'"
+    elif platform.startswith('win32'):
+        openCommand = "start '" + URI + "'"
+    elif platform.startswith('darwin'):
+        openCommand = "open '" + URI + "'"
+    elif platform.startswith('cygwin'):
+        openCommand = "cygstart '" + URI + "'"
+    else:
+        raise Exception("Unfortunatly, your system isn't support. You should be running a new version of Windows, Mac or Linux.")
+
+    os.system(openCommand)
 
 def handleSingleArticle(vaultName, vaultPath, profileName, articleSource, articleURL):
 
