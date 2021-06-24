@@ -363,7 +363,12 @@ def extractArticleContent(textDetails, soup, clearText=False, delimiter='\n'):
     else:
         textList = locateContent(textDetails, soup, True, (textDetails['recursive'] == 'True'))
 
-    # Get the list with the <p> tags in it
+    # Get a title image too, if specified in the profile
+    if textDetails['headerImage'] != "":
+        # Extracting the title image
+        headerImage = locateContent(textDetails['headerImage'], soup)
+        # Inserting it in the existing soup containing the text and other wanted elements, as the first element
+        textList.insert(0, headerImage)
 
     if textList == "Unknown":
         raise Exception("Wasn't able to fetch the text for the following soup:" + str(soup))
