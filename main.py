@@ -601,4 +601,7 @@ def downloadBulk():
         currentProfile = URLlist.pop(0)
         for url in URLlist:
             handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, requests.get(url).content, url)
-main()
+while True:
+    main()
+    if input("Exit? [y/N]: ").lower() == "y":
+        break
