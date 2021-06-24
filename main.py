@@ -56,6 +56,9 @@ from collections import Counter
 # Used for normalising cleartext from articles
 import unicodedata
 
+# Used for scraping web papges in parrallel (multithreaded)
+from concurrent.futures import ThreadPoolExecutor
+
 def checkIfURL(URL):
     if re.match(r"https?:\/\/.*\..*", URL):
         return True
@@ -525,12 +528,31 @@ def handleSingleArticle(vaultName, vaultPath, profileName, articleSource, articl
 def scrapeAndConstruct():
     articleURLLists = gatherArticleURLs(getProfiles())
 
+    # The final collection for holding the scraped OG tags
     OGTagCollection = {}
-    for URLList in articleURLLists:
-        # Getting the name of the current profile, which is stored in the start of each of the lists with URLs for the different news sites
-        currentProfile = URLList.pop(0)
-        # Getting the relevant part of the dictionary created by collectOGTags
-        OGTagCollection[currentProfile] = collectOGTags(currentProfile, URLList)[currentProfile]
+
+    # A temporary list for storing the futures generated when launching tasks in parallel
+    futureList = []
+
+    # Launching a thread pool executor for parallisation
+    with ThreadPoolExecutor(max_workers = 30) as executor:
+
+        # Looping through the list of urls scraped from the front page of a couple of news sites
+        for URLList in articleURLLists:
+
+            # Getting the name of the current profile, which is stored in the start of each of the lists with URLs for the different news sites
+            currentProfile = URLList.pop(0)
+
+            # Appending a list to the futures list, containing two elements: The name of the profile for the scraped article, and the future itself
+            futureList.append([currentProfile, executor.submit(collectOGTags, currentProfile, URLList)])
+
+        # Looping through all the futures representing the parallel tasks that are running in the background, checking if they are done and then store the result and remove them from the list if they are
+        while futureList != []:
+            for future in futureList:
+                if future[1].done():
+                    OGTagCollection[future[0]] = future[1].result()[future[0]]
+                    futureList.remove(future)
+            time.sleep(0.1)
 
     # Constructing the article overview HTML file
     constructArticleOverview(scrambleOGTags(OGTagCollection))
