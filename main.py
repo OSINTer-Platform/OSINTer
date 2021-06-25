@@ -340,8 +340,12 @@ def presentArticleOverview(path):
 
 # Function used for extracting the get parameter for the articles used for communicating the profile associated with an article
 def extractProfileParamater(URL):
-    parsedURL = parse.urlparse(URL)
-    return parse.parse_qs(parsedURL.query)['OSINTwProfile'][0]
+    try:
+        parsedURL = parse.urlparse(URL)
+        return parse.parse_qs(parsedURL.query)['OSINTwProfile'][0]
+    except KeyError:
+        return None
+
 
 # Function for collecting all the small details from the article (title, subtitle, date and author)
 def extractArticleDetails(contentDetails, soup):
@@ -576,10 +580,14 @@ def handleBrowserDriver(driver):
 
     currentProfile = extractProfileParamater(pageURL)
 
-    if checkIfURL(pageURL):
-        return pageSource, pageURL, currentProfile
+    # If the script wasn't able to extract the OSINTwProfile parameter it will warn the user, and just skip the rest of the script, effectivly restarting it
+    if currentProfile != None:
+        if checkIfURL(pageURL):
+            return pageSource, pageURL, currentProfile
+        else:
+            raise Exception("Problem, URL: " + str(pageURL))
     else:
-        raise Exception("Problem, URL: " + str(pageURL))
+        return None, None, None
 
 def main():
     if overviewNeedsRefresh("./webFront/overview.html"):
@@ -592,7 +600,12 @@ def main():
     driver = presentArticleOverview("./webFront/overview.html")
 
     pageSource, pageURL, currentProfile = handleBrowserDriver(driver)
-    handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, pageSource, pageURL)
+
+    # Making sure the script was able to extract the OSINTwProfile, since it otherwise will only return None
+    if pageSource == pageURL == currentProfile == None:
+        print("It doesn't seem like the page you navigated to contains the URL \"OSINTwProfile\" parameter needed for the script to continue. This could be due to navigating to another article than one of those offered in the overview, but it could also simply be a bug in the script.")
+    else:
+        handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, pageSource, pageURL)
 
 # Dump function for just downloading all the articles the program can scrape
 def downloadBulk():
