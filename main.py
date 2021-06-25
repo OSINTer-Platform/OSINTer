@@ -367,8 +367,9 @@ def extractArticleContent(textDetails, soup, clearText=False, delimiter='\n'):
     if textDetails['headerImage'] != "":
         # Extracting the title image
         headerImage = locateContent(textDetails['headerImage'], soup)
-        # Inserting it in the existing soup containing the text and other wanted elements, as the first element
-        textList.insert(0, headerImage)
+        # Inserting it in the existing soup containing the text and other wanted elements, as the first element, if it was possible to extract one
+        if headerImage != None:
+            textList.insert(0, headerImage)
 
     if textList == "Unknown":
         raise Exception("Wasn't able to fetch the text for the following soup:" + str(soup))
