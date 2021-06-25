@@ -1,5 +1,11 @@
 #!/usr/bin/python
 
+# The name of your obsidian vault
+obsidianVault = "Testing"
+# The absolute path to your obsidian vault
+vaultPath = "/home/bertmad/Obsidian/Testing/"
+
+
 # Used for interacting with the file system
 import os
 
@@ -605,7 +611,12 @@ def main():
     if pageSource == pageURL == currentProfile == None:
         print("It doesn't seem like the page you navigated to contains the URL \"OSINTwProfile\" parameter needed for the script to continue. This could be due to navigating to another article than one of those offered in the overview, but it could also simply be a bug in the script.")
     else:
-        handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, pageSource, pageURL)
+        handleSingleArticle(obsidianVault, vaultPath, currentProfile, pageSource, pageURL)
+
+# Function checking whether the variables specifying which obsidian vault to use is set
+def checkIfObsidianDetailsSet():
+    if obsidianVault == "" or vaultPath == "":
+        raise Exception("You need to specify which Obsidian vault to use, and the path to it. These details are defined in the very part of the script as variables.")
 
 # Dump function for just downloading all the articles the program can scrape
 def downloadBulk():
@@ -614,8 +625,9 @@ def downloadBulk():
     for URLlist in articleURLLists:
         currentProfile = URLlist.pop(0)
         for url in URLlist:
-            handleSingleArticle("Testing", "/home/bertmad/Obsidian/Testing/", currentProfile, requests.get(url).content, url)
+            handleSingleArticle(obsidianVault, vaultPath, currentProfile, requests.get(url).content, url)
 while True:
+    checkIfObsidianDetailsSet()
     main()
     if input("Exit? [y/N]: ").lower() == "y":
         break
