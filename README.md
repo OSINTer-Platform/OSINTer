@@ -26,8 +26,11 @@ any markdown editor of your choice.
    `pip install -r requirements.txt`
 4. Download the [geckodriver](https://github.com/mozilla/geckodriver/releases),
    unpack it and put the executable in the newly cloned directory
-5. Simply run main.py, sit back and relax while the script does the heavy
-   lifting for you
+6. Edit the variables "obsidianVault" and "vaultPath" in the start of the start
+   of main.py to match the name of your obsidian vault, and the absolute path
+   to it.
+7. Simply run main.py, sit back and relax while the script does the heavy
+   lifting for you.
 
 
 ## What is profiles?

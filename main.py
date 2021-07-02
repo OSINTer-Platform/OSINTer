@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
 # The name of your obsidian vault
-obsidianVault = "Testing"
+obsidianVault = ""
 # The absolute path to your obsidian vault
-vaultPath = "/home/bertmad/Obsidian/Testing/"
+vaultPath = ""
 
 
 # Used for interacting with the file system
