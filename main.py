@@ -308,9 +308,9 @@ def constructArticleOverview(OGTags):
     # The JS variable contains the list for the following variables: articleURLs imageURLs, titles and descriptions. The string hardcoded into these right here is the name of the javascript arrays that each of these list in the JSList will create
     JSList = [["articleURLs"],["imageURLs"],["titles"],["descriptions"]]
     for i,article in enumerate(OGTags):
-        # If there's already a paramater in the url it will add the OSINTwProfile parameter with &, otherwise it will simply use ?
-        # OSINTwProfile is used when scraping the website, to know what profile is associated with the article the user choose
-        URL = article['url'] + ('&' if parse.urlparse(article['url']).query else '?') + "OSINTwProfile=" + article['profile']
+        # If there's already a paramater in the url it will add the OSINTerProfile parameter with &, otherwise it will simply use ?
+        # OSINTerProfile is used when scraping the website, to know what profile is associated with the article the user choose
+        URL = article['url'] + ('&' if parse.urlparse(article['url']).query else '?') + "OSINTerProfile=" + article['profile']
         HTML += '<article id="card-' + str(i) + '"><a href="' + URL + '"><h1>' + article['title'] + '</h1></a></article>\n'
         CSS += '#card-' + str(i) + '::before { background-image: url("' + article['image'] + '");}\n'
         JSList[0].append(URL)
@@ -348,7 +348,7 @@ def presentArticleOverview(path):
 def extractProfileParamater(URL):
     try:
         parsedURL = parse.urlparse(URL)
-        return parse.parse_qs(parsedURL.query)['OSINTwProfile'][0]
+        return parse.parse_qs(parsedURL.query)['OSINTerProfile'][0]
     except KeyError:
         return None
 
@@ -586,7 +586,7 @@ def handleBrowserDriver(driver):
 
     currentProfile = extractProfileParamater(pageURL)
 
-    # If the script wasn't able to extract the OSINTwProfile parameter it will warn the user, and just skip the rest of the script, effectivly restarting it
+    # If the script wasn't able to extract the OSINTerProfile parameter it will warn the user, and just skip the rest of the script, effectivly restarting it
     if currentProfile != None:
         if checkIfURL(pageURL):
             return pageSource, pageURL, currentProfile
@@ -607,9 +607,9 @@ def main():
 
     pageSource, pageURL, currentProfile = handleBrowserDriver(driver)
 
-    # Making sure the script was able to extract the OSINTwProfile, since it otherwise will only return None
+    # Making sure the script was able to extract the OSINTerProfile, since it otherwise will only return None
     if pageSource == pageURL == currentProfile == None:
-        print("It doesn't seem like the page you navigated to contains the URL \"OSINTwProfile\" parameter needed for the script to continue. This could be due to navigating to another article than one of those offered in the overview, but it could also simply be a bug in the script.")
+        print("It doesn't seem like the page you navigated to contains the URL \"OSINTerProfile\" parameter needed for the script to continue. This could be due to navigating to another article than one of those offered in the overview, but it could also simply be a bug in the script.")
     else:
         handleSingleArticle(obsidianVault, vaultPath, currentProfile, pageSource, pageURL)
 

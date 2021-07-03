@@ -1,10 +1,10 @@
-# OSINTw
+# OSINTer
 
-## What is OSINTw?
-OSINTw is a simple python script designed for simplifying and automating the
+## What is OSINTer?
+OSINTer is a simple python script designed for simplifying and automating the
 parsing and storing of informations obtained from news article from a number of
 news sites. The technical details can be found in the last two sections, but in
-short OSINTw presents the user with the 10 most recent articles from each of a
+short OSINTer presents the user with the 10 most recent articles from each of a
 list of pre-defined news sites and when the user has read an article of their
 choice, the relevant information from the article will be parsed to a markdown
 format based in the included template and opened in obsidian for further editing.
@@ -60,9 +60,9 @@ the RSS feeds, it does allow for gathering of articles from basically any
 news site.
 
 ## The technical details
-So how does OSINTw function? There is a (admittedly quite primitive) flowchart
+So how does OSINTer function? There is a (admittedly quite primitive) flowchart
 included in this repo, but if that's not your coup of tea, then here a quick
-rundown of the inner functions of OSINTw.
+rundown of the inner functions of OSINTer.
 
 First the script reads the profiles (which also acts as a list of news sites to
 scrape) and based on those scrapes the 10 most recent articles, either using
@@ -103,7 +103,7 @@ the URL for the article. The URL itself is used for two things; First of all
 simply for providing a source for the article when parsing it to markdown, but
 two; also for specifying which profile to use for scraping the source code. When
 the script parsed the OG tags to HTML, it added a query string to all of the
-URL's named "OSINTwProfile". As it is extremly unlikely that any website is
+URL's named "OSINTerProfile". As it is extremly unlikely that any website is
 normally using this as a query string, it won't interact with the website, but
 it is the easiest way of letting the second part of the script know which
 article to look for the neccessary details in.
