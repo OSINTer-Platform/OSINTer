@@ -6,58 +6,14 @@ obsidianVault = ""
 vaultPath = ""
 
 
-## Used for interacting with the file system
-#import os
-#
-## Used for determining what os is running the script
-#import sys
-#
-## Mainly used for sleeping
+# Mainly used for sleeping
 import time
-#
-## Used both for determing paths to a certain file/directory and opening files for quick reading
-#from pathlib import Path
-#
-## For checking if string matches regex
-#import re
-#
-## For filling out the markdown template at last
-#from string import Template
-#
-## For manipulating lists in a way that's less memory intensive
-#import itertools
-#
-## The profiles mapping the different websites are in json format
+
+# The profiles mapping the different websites are in json format
 import json
-#
-## Used to gather the urls from the articles, by reading a RSS feed
-#import feedparser
-#
-## Used for scraping static pages
-#import requests
-#
+
+# Used for detecting when the user closes the web driver
 import selenium
-#
-## Used for dynamically scraping pages that aren't static
-from selenium import webdriver
-#
-## Used for running the browser headlessly
-#from selenium.webdriver.firefox.options import Options
-#
-## Used for extracting get paramter from URL, for communicating the profile associated with an article
-#from urllib import parse
-#
-## For parsing html
-#from bs4 import BeautifulSoup
-#
-## For generating random numbers for scrambling the article overview
-#import random
-#
-## Used for normalising cleartext from articles
-#import unicodedata
-#
-## Used for scraping web papges in parrallel (multithreaded)
-#from concurrent.futures import ThreadPoolExecutor
 
 
 from OSINTprofiles import getProfiles
