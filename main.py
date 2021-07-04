@@ -16,14 +16,8 @@ import json
 import selenium
 
 
-from OSINTprofiles import getProfiles
-import OSINTscraping
-import OSINTextract
-import OSINTtext
-import OSINTfiles
-import OSINTlocal
-import OSINTtags
-import OSINTmisc
+from OSINTmodules.OSINTprofiles import getProfiles
+from OSINTmodules import *
 
 def handleSingleArticle(vaultName, vaultPath, profileName, articleSource, articleURL):
 

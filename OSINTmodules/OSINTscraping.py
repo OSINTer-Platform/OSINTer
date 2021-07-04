@@ -27,7 +27,7 @@ from selenium.webdriver.firefox.options import Options
 # For parsing html
 from bs4 import BeautifulSoup
 
-from OSINTmisc import catURL
+from OSINTmodules.OSINTmisc import catURL
 
 # Scraping targets is element and class of element in which the target url is stored, and the profileName is prepended on the list, to be able to find the profile again when it's needed for scraping
 def scrapeArticleURLs(rootURL, frontPageURL, scrapingTargets, profileName):

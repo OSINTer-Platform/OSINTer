@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # For doing substitution on text
 import re
 

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # For generating random numbers for scrambling the OG tags
 import random
 
@@ -16,10 +18,10 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 # Used for loading a specific profile
-from OSINTprofiles import getProfiles
+from OSINTmodules.OSINTprofiles import getProfiles
 
 # Used for scraping the needed OG tags
-from OSINTscraping import scrapeOGTags
+from OSINTmodules.OSINTscraping import scrapeOGTags
 
 
 

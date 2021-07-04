@@ -13,7 +13,7 @@ from markdownify import markdownify
 from urllib import parse
 
 # Used for creating the name of the markdown file in a safe maner
-from OSINTmisc import fileSafeString
+from OSINTmodules.OSINTmisc import fileSafeString
 
 # Function for writing details from a template to a file
 def writeTemplateToFile(contentList, templateFile, newFile):

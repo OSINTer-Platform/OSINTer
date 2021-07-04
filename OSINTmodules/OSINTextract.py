@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # For parsing html
 from bs4 import BeautifulSoup
 
