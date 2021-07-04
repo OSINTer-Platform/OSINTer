@@ -7,7 +7,7 @@
     "newsPath": "https://threatpost.com/feed"
   },
   "scraping": {
-    "type": "static",
+    "type": "no-action",
     "details": {
       "title": {
         "containerClass": "c-article__header",

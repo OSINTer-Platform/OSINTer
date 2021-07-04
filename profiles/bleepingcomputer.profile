@@ -7,7 +7,7 @@
     "newsPath": "https://www.bleepingcomputer.com/feed/"
   },
   "scraping": {
-    "type": "static",
+    "type": "no-action",
     "details": {
       "title": {
         "containerClass": "article_section",

@@ -12,7 +12,7 @@
     }
   },
   "scraping": {
-    "type": "static",
+    "type": "no-action",
     "details": {
       "title": {
         "containerClass": "storyHeader article",
