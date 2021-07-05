@@ -1,4 +1,4 @@
-# OSINTer
+# OSINT'er
 
 ![OSINTer](https://github.com/Combitech-DK/OSINTer/blob/testing/webFront/newLogo.png)
 
