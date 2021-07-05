@@ -1,5 +1,8 @@
 # OSINTer
 
+![OSINTer](https://github.com/Combitech-DK/OSINTer/blob/testing/webFront/newLogo.png)
+
+
 ## What is OSINTer?
 OSINTer is a simple python script designed for simplifying and automating the
 parsing and storing of informations obtained from news article from a number of
