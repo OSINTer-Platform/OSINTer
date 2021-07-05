@@ -12,8 +12,11 @@ from urllib import parse
 
 from pathlib import Path
 
-# For checking that the user indeed has the right variables set for the program
-from __main__ import obsidianVault, vaultPath
+try:
+    # For checking that the user indeed has the right variables set for the program
+    from __main__ import obsidianVault, vaultPath
+except:
+    pass
 
 
 def checkIfURL(URL):
