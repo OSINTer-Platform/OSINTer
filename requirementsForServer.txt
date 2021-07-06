@@ -1,0 +1,14 @@
+# For interacting with the postgresql database
+psycopg2
+
+# For dynamicaly scraping pages
+selenium
+
+# For scraping static sites, including OG tags
+requests
+
+# For parsing urls
+urllib3
+
+# For handling paths in cross-platform fashin
+pathlib

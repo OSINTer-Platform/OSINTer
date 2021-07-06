@@ -15,3 +15,6 @@ markdownify
 
 # For parsing urls
 urllib3
+
+# For handling paths in cross-platform fashin
+pathlib
