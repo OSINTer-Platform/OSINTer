@@ -55,5 +55,6 @@ def main():
 
         for articleURL in articleList:
             fromURLToMarkdown(articleURL, currentProfile, articlePath)
+            OSINTdatabase.markAsScraped(conn, articleURL)
 
 main()

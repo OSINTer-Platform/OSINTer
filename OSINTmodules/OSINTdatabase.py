@@ -7,7 +7,8 @@ def initiateArticleTable(connection):
                             "description VARCHAR(350)",
                             "url VARCHAR(300) NOT NULL",
                             "image_url VARCHAR(300)",
-                            "profile VARCHAR(30) NOT NULL"
+                            "profile VARCHAR(30) NOT NULL",
+                            "scraped BOOL NOT NULL"
                         ]
     createTable(connection, "articles", tableContentList)
 
@@ -45,9 +46,14 @@ def writeOGTagsToDB(connection, OGTags, tableName):
                 if cur.fetchall()[0][0] == False:
                     # Adding the url to list of new articles since it was not found in the database
                     newUrls[-1].append(tags['url'])
-                    insertQuery = "INSERT INTO {} (title, description, url, image_url, profile) VALUES (%s, %s, %s, %s, %s);".format(tableName)
+                    insertQuery = "INSERT INTO {} (title, description, url, image_url, profile, scraped) VALUES (%s, %s, %s, %s, %s, false);".format(tableName)
                     insertParameters = (tags['title'], tags['description'], tags['url'], tags['image'], newsSite)
                     cur.execute(insertQuery, insertParameters)
     connection.commit()
     # Return the list of urls not already in the database so they can be scraped
     return newUrls
+
+def markAsScraped(connection, URL):
+    with connection.cursor() as cur:
+        cur.execute("UPDATE articles SET scraped = true WHERE url = %s;", (URL,))
+        connection.commit()
