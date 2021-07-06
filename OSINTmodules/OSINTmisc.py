@@ -18,6 +18,17 @@ try:
 except:
     pass
 
+def createNewsSiteFolder(newsSite):
+    if os.path.isdir(Path("./articles/" + newsSite)):
+        return True
+    else:
+        try:
+			os.mkdir(Path("./articles/" + newsSite))
+            return True
+		except:
+			print("Apparently {} couldn't get the needed folder created for storing MD files")
+            return False
+
 
 def checkIfURL(URL):
     if re.match(r"https?:\/\/.*\..*", URL):
