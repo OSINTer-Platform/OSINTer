@@ -9,6 +9,7 @@ import json
 from OSINTmodules.OSINTprofiles import getProfiles
 from OSINTmodules import *
 
+postgresqlPassword = ""
 
 def fromURLToMarkdown(URL, currentProfile, MDFilePath="./"):
 
@@ -32,7 +33,7 @@ def fromURLToMarkdown(URL, currentProfile, MDFilePath="./"):
 
 def main():
     # Connecting to the database
-    conn = psycopg2.connect("dbname=osinter user=postgres")
+    conn = psycopg2.connect("dbname=osinter user=postgres password=" + postgresqlPassword)
 
     articleURLLists = OSINTscraping.gatherArticleURLs(getProfiles())
     OGTagCollection = OSINTtags.collectAllOGTags(articleURLLists)

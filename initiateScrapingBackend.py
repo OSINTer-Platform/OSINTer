@@ -9,6 +9,7 @@ from pathlib import Path
 
 from OSINTmodules import OSINTdatabase
 
+postgresqlPassword = ""
 
 if not os.path.isdir(Path("./articles")):
     try:
@@ -17,7 +18,7 @@ if not os.path.isdir(Path("./articles")):
         raise Exception("The folder needed for creating storing the markdown files representing the articles couldn't be created, exiting")
 
 # Connecting to the database
-conn = psycopg2.connect("user=postgres")
+conn = psycopg2.connect("user=postgres password=" + postgresqlPassword)
 
 # Needed ass create database cannot be run within transaction
 conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
@@ -32,7 +33,7 @@ with conn.cursor() as cur:
 conn.close()
 
 # Connecting to the newly created database
-conn = psycopg2.connect("dbname=osinter user=postgres")
+conn = psycopg2.connect("dbname=osinter user=postgres password=" + postgresqlPassword)
 
 print("Creating the needed table...")
 # Making sure the database has gotten the needed table(s)
