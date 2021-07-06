@@ -16,7 +16,7 @@ from urllib import parse
 from OSINTmodules.OSINTmisc import fileSafeString
 
 # Function for writing details from a template to a file
-def writeTemplateToFile(contentList, templateFile, newFile):
+def writeTemplateToFile(contentList, templateFile, newFilePath):
     # Open the template for the given file
     with open(Path(templateFile), "r") as source:
         # Read the template file
@@ -24,11 +24,11 @@ def writeTemplateToFile(contentList, templateFile, newFile):
         # Load the template but fill in the values from contentList
         filledTemplate = sourceTemplate.substitute(contentList)
         # Write the filled template to a new file that can then be used
-        with open(Path(newFile), "w") as newF:
+        with open(Path(newFilePath), "w") as newF:
             newF.write(filledTemplate)
 
 # Function for taking in some details about an articles and creating a markdown file with those
-def createMDFile(sourceName, sourceURL, articleDetails, articleContent, articleTags):
+def createMDFile(sourceName, sourceURL, articleDetails, articleContent, articleTags, MDFilePath="./"):
 
     # Define the title
     title = articleDetails[0]
@@ -64,7 +64,7 @@ def createMDFile(sourceName, sourceURL, articleDetails, articleContent, articleT
     }
 
     # Converting the title of the article to a string that can be used as filename and then opening the file in append mode (will create file if it doesn't exist)
-    MDFileName = fileSafeString(articleDetails[0]) + ".md"
+    MDFileName = MDFilePath + fileSafeString(articleDetails[0]) + ".md"
 
     writeTemplateToFile(contentList, "./markdownTemplate.md", MDFileName)
 
