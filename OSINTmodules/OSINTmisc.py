@@ -19,15 +19,11 @@ except:
     pass
 
 def createNewsSiteFolder(newsSite):
-    if os.path.isdir(Path("./articles/" + newsSite)):
-        return True
-    else:
+    if not os.path.isdir(Path("./articles/" + newsSite)):
         try:
-			os.mkdir(Path("./articles/" + newsSite))
-            return True
-		except:
-			print("Apparently {} couldn't get the needed folder created for storing MD files")
-            return False
+            os.mkdir(Path("./articles/" + newsSite))
+        except:
+            raise Exception("Apparently {} couldn't get the needed folder created for storing MD files, exiting".format(newsSite))
 
 
 def checkIfURL(URL):
