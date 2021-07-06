@@ -13,20 +13,21 @@ def initiateArticleTable(connection):
 
 # Function for creating new tables
 def createTable(connection, tableName, tableContentList):
+    # Making sure the tablename is in all lowercase
+    tableName = tableName.lower()
     # Opening new cursor that will automatically close when function is done
     with connection.cursor() as cur:
         # Checking if a table with the specified wanted name already exists
-        cur.execute("SELECT to_regclass('public.{}');".format(tableName.lower()))
-        results = cur.fetchall()
-        if results[0][0] == None:
+        cur.execute("SELECT to_regclass('public.{}');".format(tableName))
+        if cur.fetchall()[0][0] == None:
             # Creating the text used to specify the contents of the table
             tableContents = ", ".join([x for x in tableContentList])
             # Creating the table with the specified content
-            cur.execute("CREATE TABLE {} ({});".format(tableName.lower(), tableContents))
+            cur.execute("CREATE TABLE {} ({});".format(tableName, tableContents))
             # Writing the changes to the database
             connection.commit()
         else:
-            print("Table \"%s\" already exists, skipping it for now" % tableName.lower())
+            print("Table \"%s\" already exists, skipping it for now" % tableName)
 
 # Function for writting OG tags to database
 def writeOGTagsToDB(connection, OGTags, tableName):
