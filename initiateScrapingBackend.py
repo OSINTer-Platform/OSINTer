@@ -24,12 +24,16 @@ conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
 # Creating a new database
 with conn.cursor() as cur:
-    cur.execute("CREATE DATABASE osinter;")
+    try:
+        cur.execute("CREATE DATABASE osinter;")
+    except psycopg2.errors.DuplicateDatabase:
+        print("Database already exists, skipping")
 
 conn.close()
 
 # Connecting to the newly created database
 conn = psycopg2.connect("dbname=osinter user=postgres")
 
+print("Creating the needed table...")
 # Making sure the database has gotten the needed table(s)
 OSINTdatabase.initiateArticleTable(conn)
