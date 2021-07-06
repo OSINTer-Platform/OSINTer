@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # The name of your obsidian vault
 obsidianVault = ""

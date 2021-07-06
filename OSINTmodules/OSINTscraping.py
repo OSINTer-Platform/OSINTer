@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # Used for sleeping
 import time
 

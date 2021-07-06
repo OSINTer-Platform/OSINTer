@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 def initiateArticleTable(connection):
     tableContentList = [
                             "id BIGSERIAL NOT NULL PRIMARY KEY",

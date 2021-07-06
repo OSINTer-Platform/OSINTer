@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # For generating random numbers for scrambling the OG tags
 import random
 

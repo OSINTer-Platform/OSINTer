@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # Used for handling relative paths
 from pathlib import Path
 

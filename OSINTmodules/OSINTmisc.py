@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # For checking if string matches regex
 import re
 

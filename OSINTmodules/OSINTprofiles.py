@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # Used for listing files in directory
 import os
 
