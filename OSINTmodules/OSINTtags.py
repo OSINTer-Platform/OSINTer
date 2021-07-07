@@ -88,6 +88,11 @@ def scrambleOGTags(OGTagCollection):
     # The list of the scrambled OG tags that will be returned
     scrambledTags = list()
 
+    # Making sure that we have no empty lists with articles
+    for profile in list(OGTagCollection):
+        if OGTagCollection[profile] == []:
+            del OGTagCollection[profile]
+
     while OGTagCollection != {}:
         # Choosing a random source (eg. bleepingcomputer or zdnet or something else)
         randomSource = random.choice(" ".join(OGTagCollection).split())
