@@ -51,6 +51,35 @@ def writeOGTagsToDB(connection, OGTags, tableName):
     # Return the list of urls not already in the database so they can be scraped
     return newUrls
 
+def requestOGTagsFromDB(connection, tableName):
+
+    # The dictionary to hold the OG tags
+    OGTagCollection = {}
+
+    with connection.cursor() as cur:
+        # Get the different profiles stored in the database
+        cur.execute("SELECT DISTINCT profile FROM {};".format(tableName))
+        profiles = cur.fetchall()
+        for profile in profiles:
+
+            # As the profiles is each stored as a tuble when recieved from the database, one has to remember to take the first (and) only element of the tuble to work with
+            OGTagCollection[profile[0]] = []
+
+            # Take the 10 newest articles from a specfic source that has been scraped
+            cur.execute("SELECT * FROM {} WHERE profile=%s AND scraped=true ORDER BY id DESC LIMIT 10;".format(tableName), (profile[0],))
+            queryResults = cur.fetchall()
+
+            # Adding them to the final OG tag collection
+            for result in queryResults:
+                OGTagCollection[profile[0]].append({
+                         'profile'      : result[5],
+                         'url'          : result[3],
+                         'title'        : result[1],
+                         'description'  : result[2],
+                         'image'        : result[4]
+                    })
+    return OGTagCollection
+
 def markAsScraped(connection, URL):
     with connection.cursor() as cur:
         cur.execute("UPDATE articles SET scraped = true WHERE url = %s;", (URL,))
