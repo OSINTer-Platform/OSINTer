@@ -70,7 +70,7 @@ def createMDFile(sourceName, sourceURL, articleDetails, articleContent, articleT
     return MDFileName
 
 # Function used for constructing the CSS and HTML needed for the front end used for presenting the users with the different articles
-def constructArticleOverview(OGTags):
+def constructArticleOverview(OGTags, overviewPath="./webFront/"):
     HTML = ""
     CSS = ""
     JS = ""
@@ -91,7 +91,7 @@ def constructArticleOverview(OGTags):
         JS += 'const ' + currentJSList.pop(0) + ' = [ "' + currentJSList.pop(0) + '"' + "".join([(', "' + element + '"') for element in currentJSList]) + ' ]\n'
 
     # Make template for HTML file
-    writeTemplateToFile({'CSS': CSS, 'HTML': HTML}, "./webFront/index.html", "./webFront/overview.html")
+    writeTemplateToFile({'CSS': CSS, 'HTML': HTML}, "./webFront/index.html", overviewPath + "overview.html")
 
     # Make the template for the JS file
-    writeTemplateToFile({'variables': JS}, "./webFront/switchOverview.js", "./webFront/script.js")
+    writeTemplateToFile({'variables': JS}, "./webFront/switchOverview.js", overviewPath + "script.js")
