@@ -5,6 +5,9 @@ import re
 import time
 import os
 
+# For getting the current date and time for logging and verbose output
+from datetime import datetime
+
 # Used for extracting get paramter from URL, for communicating the profile associated with an article
 from urllib import parse
 
@@ -15,6 +18,19 @@ try:
     from __main__ import obsidianVault, vaultPath
 except:
     pass
+
+try:
+    # For if the user wants verbose output
+    from __main__ import debugMessages
+except:
+    pass
+
+
+def printDebug(message, timeStamp=True):
+    if debugMessages and timeStamp:
+        print(datetime.now().strftime("[%d/%m/%Y-%H:%M:%S]") + " " + message)
+    elif debugMessages:
+        print(message)
 
 def createNewsSiteFolder(newsSite):
     if not os.path.isdir(Path("./articles/" + newsSite)):
