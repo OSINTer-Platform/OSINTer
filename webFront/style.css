@@ -57,6 +57,7 @@ header {
 	padding: 1em 2em;
 
 	font-family: 'Calibri',sans-serif;
+	background-color: #ffffff;
 }
 
 header > * {
@@ -115,9 +116,9 @@ header > :not(#logo) {
 
 #logo {
 	align-self: start;
-	height: 3.9cm;
+	height: 2.9cm;
 
-	padding: 0 2em;
+	padding: 0 4em;
 
 	text-align: center;
 
@@ -125,22 +126,19 @@ header > :not(#logo) {
 
 	text-transform: uppercase;
 
-	clip-path: ellipse(calc(3.3cm * 1.6) calc(3.3cm/1.8) at center);
+	clip-path: ellipse(calc(3.2cm * 1.2) calc(3.3cm/1.5) at center);
 }
 
 #logo > :nth-child(2) {
-	margin-top: -0.25em;
+	margin-top: -2.25em;
 	font-size: 0.725em;
 	font-weight: lighter;
 	letter-spacing: 0.025em;
 }
 
-#logo > * {
-	margin: 0;
-}
 
 #logo img {
-	width: 2.5cm;
+	width: 6.75cm;
 	height: auto;
 }
 
