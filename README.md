@@ -1,6 +1,6 @@
 # OSINT'er
 
-![OSINTer](https://github.com/Combitech-DK/OSINTer/blob/testing/webFront/newLogo.png)
+![OSINTer](https://github.com/Combitech-DK/OSINTer/blob/master/logo.png)
 
 
 ## What is OSINTer?
