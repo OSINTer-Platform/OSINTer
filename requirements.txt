@@ -18,3 +18,9 @@ urllib3
 
 # For handling paths in cross-platform fashin
 pathlib
+
+# For interacting with the postgresql database
+psycopg2
+
+# For hosting the webserver
+flask
