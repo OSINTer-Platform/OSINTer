@@ -1,14 +1,14 @@
 ![OSINTer](https://raw.githubusercontent.com/bertmad3400/OSINTer/master/logo.png)
 # Introduction
-OSINTer is an open source intelligence gathering tool, designed to ease the intelligence gathering process by scraping reliable intelligence news sources, and presenting them in an easy to navigate UI, to allow intelligence analysts to look at a great deal of intelligence collectively.
+OSINTer is an open source intelligence gathering tool, designed to ease the intelligence gathering process by scraping reliable intelligence news sources, and presenting them in an easy to navigate UI, hosted as a webserver, to allow intelligence analysts to look at a great deal of intelligence collectively.
 OSINTer is split into multiple repositories for ease of development.
 | Repository | Description |
 | --- | --- |
 | ![OSINTansible](https://github.com/bertmad3400/OSINTansible) | Responsible for making the installation process easier, by using ansible. |
-| ![OSINTbackend](https://github.com/bertmad3400/OSINTbackend) | Which is responsible for the scraping and initialization of OSINTer. |
-| ![OSINTmodules](https://github.com/bertmad3400/OSINTmodules) | Which is responsible for handling many of the finer operations, such as the scraping, text handling, and DBMS. |
-| ![OSINTprofiles](https://github.com/bertmad3400/OSINTmodules) | Which is responsible for specifying the various sources that are scraped for intelligence. |
-| ![OSINTwebserver](https://github.com/bertmad3400/OSINTwebserver) | Which is responsible for displaying the intelligence in an easy to view format.|
+| ![OSINTbackend](https://github.com/bertmad3400/OSINTbackend) | Responsible for the scraping and initialization of OSINTer. |
+| ![OSINTmodules](https://github.com/bertmad3400/OSINTmodules) | Responsible for handling many of the finer operations, such as the scraping, text handling, and DBMS. |
+| ![OSINTprofiles](https://github.com/bertmad3400/OSINTmodules) | Responsible for specifying the various sources that are scraped for intelligence. |
+| ![OSINTwebserver](https://github.com/bertmad3400/OSINTwebserver) | Responsible for displaying the intelligence in an easy to view format.|
 
 ## What problem does OSINTer solve?
 The process of gathering cyber threat intelligence is only as successful as the investigators ability to identify relevant intelligence sources. Identifying relevant and reliable sources could often be a time-consuming task, as the CTI personnel would have to first locate the intelligence source, then read it to identify its relevance and usefulness as well as identify its formatting, and finally mark down all relevant details for usage in their report.<br>
@@ -16,7 +16,7 @@ This is time consuming and can be hit and miss depending on the skill and experi
 
 ## How does OSINTer Solve the Problem?
 Firstly, to combat the time-consuming task of identifying relevant threat intelligence sources, OSINTer gathers information from known, reliable sources, automatically, and then displays these in its webservice interface in a list sorted by publish date. Providing the most current information first, and in a consistent format so that users can easily identify the relevant information sources for their CTI reports.<br>
-Secondly, the information is archived and the webservice provides functionality for users to download Obsidian Markdown files. These files, when imported into Obsidian, allows the user to analyze on all or parts of the collected information. Obsidian has tools to easily detect correlations between the information, providing a much-needed overview of the collected information. 
+Secondly, the information is archived and the webservice provides functionality for users to download Markdown files. These files, when imported into any markdown editor (preferably Obsidian), allows the user to analyze on all or parts of the collected information. Obsidian has tools to easily detect correlations between the information, providing a much-needed overview of the collected information.
 
 ## How do we intend to use OSINTer?
 Firstly, we intend to utilize this in our work with the CTI subscription service. With OSINTer deployed internally, the CTI team can easily identify relevant sources for the CTI reports.<br>
@@ -41,24 +41,25 @@ Currently, these are the supported distributions using x86_64 architecture:
 - Ubuntu Server 20
 - CentOS Linux 8
 - Rocky Linux 8
-<br>We do recommend running OSINTer on Arch Linux, as this has proven to have a substantial perfomance increase over the other distributions during our veryextensive testing, but we do realize that this unfortunatly isn't possible foreveryone, and therefore we fully support the other platforms listed.
+
+We do recommend running OSINTer on Arch Linux, as this has proven to - for unknown reasons - have a substantial perfomance increase over the other distributions during our very extensive testing, but we do realize that this unfortunatly isn't possible foreveryone, and therefore we fully support the other platforms listed.
 
 
 # Technical
 While OSINTer is designed to be installed on a host or series of hosts, which have just been installed, it can also be installed on host(s) running other software. Keep in mind that doing so will probably interfere with the following list of software if it's already installed:
 
-## Nginx
+### Nginx
 OSINTer utilizes Nginx to utilize the frontend portion of the solution. In order to do so, the webserver will be reconfigured for OSINTer.
 - It will replace the nginx config file found at /etc/nginx/nginx.conf◇ This will make the nginx service run as the osinter-web user
 - It will create a new site in /etc/nginx/site-available and create a symlinkto that in /etc/nginx/sites-enabled
 - It will restart the service
 
-## PostgreSQL
+### PostgreSQL
 In order to store the collected information, OSINTer utilizes PostgreSQL. If the server already has PostgreSQL installed it will be reconfigured for OSINTer:
 - On non-Debian based systems, it will try to initialize a new DB cluster inthe default location.◇ For Arch this is var/lib/postgres/data as defined in the Archlinux.jsonfile and for CentOS/Rocky Linux this is /var/lib/pgsql/data as pre-definedby the OS
-- It will replace the postgres.conf file and the pg_hba.conf file◇ This will keep the authenification method for the postgres user as beingpeer-authentification
-   → This will prevent any kind of connection to the DB using anything elsebut the unix socket
-- It will create a new DB and a whole range of new users described in thepg_hba.conf file
+- It will replace the postgres.conf file and the pg_hba.conf file◇ This will keep the authenification method for the postgres user as being peer-authentification
+   → This will prevent any kind of connection to the DB using anything else but the unix socket
+- It will create a new DB and a whole range of new users described in the pg_hba.conf file
 - It will restart the service
 
 ## Custom Certificates
@@ -70,9 +71,9 @@ When installing OSINTer you have the option of providing it with a CA certificat
 ## What are profiles?
 To understand the script, an understanding of the profiles that enables this script to run in the first place is certainly neccessary. Profiles are in short simply data structured in a JSON format specifying where and what to scrape. These are custom created on a site to site basis, and since nearly all news sites have the same structure (more or less) on all of their articles, they're made to describe some generic rules on where to find given pieces of information on a page, like in what HTML element with what tag the date is to be found, or what element is encapsulating the text in the articles.
 
-The goal with the profiles is to be as generic as possible, with the most in common with each other, to prevent a programming hell of having to program in every possible edge case that could appear in an article, and instead allow the script to use a few simple rules for scraping the articles that are the same for all sites. With that said though there are two different types of profiles, fortwo different kinds of websites. The first one is for the sites that offer are liable RSS feed which conform to standards. This one is the prefered method, since it's not only the simplest method for gathering the newest articles from asite, but oftentimes also the most reliable.
+The goal with the profiles is to be as generic as possible, with the most in common with each other, to prevent a programming hell of having to program in every possible edge case that could appear in an article, and instead allow the script to use a few simple rules for scraping the articles that are the same for all sites. With that said though there are two different types of profiles, for two different kinds of websites. The first one is for the sites that offer a reliable RSS feed which conforms to standards. This one is the prefered method, since it's not only the simplest method for gathering the newest articles from asite, but often times also the most reliable.
 
-Some site hovewer, does not offer a RSS feed, or maybe they, but it doesn't conform to the standard. Here classic webscraping of the front page is used to find the 10 newest articles, and while it does not offer the same reliability as the RSS feeds, it does allow for gathering of articles from basically any news site.
+Some site hovewer, does not offer a RSS feed, or maybe they, but it doesn't conform to the standard. Here classic webscraping of the front page is used to find the newest articles, and while it does not offer the same reliability as the RSS feeds, it does allow for gathering of articles from close to any news site.
 
 
 ## In Depth Details
