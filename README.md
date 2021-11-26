@@ -144,10 +144,10 @@ As it is desirable to have the webserver run reliably and persistently (so that 
 # Contributers
 ## People
 Thanks to all of these people for assisting in making this project become a reality.<br>
-<a href="https://github.com/bertmad3400/"><img src="https://avatars.githubusercontent.com/u/57845632?v=4" width="50" height="50" alt="Bertmad3400"/></a>
-<a href="https://github.com/TheHangryBadger/"><img src="https://avatars.githubusercontent.com/u/74346591?v=4" width="50" height="50" alt="TheHangryBadger"/></a>
-<a href="https://github.com/dtclayton/"><img src="https://avatars.githubusercontent.com/u/46198611?v=4" width="50" height="50" alt="dtclayton"/></a>
+<a href="https://github.com/bertmad3400/"><img src="https://avatars.githubusercontent.com/u/57845632?v=4" width="100" height="100" alt="bertmad3400"/></a>
+<a href="https://github.com/TheHangryBadger/"><img src="https://avatars.githubusercontent.com/u/74346591?v=4" width="100" height="100" alt="TheHangryBadger"/></a>
+<a href="https://github.com/dtclayton/"><img src="https://avatars.githubusercontent.com/u/46198611?v=4" width="100" height="100" alt="dtclayton"/></a>
 
 ## Organisations
 Thanks to <b>Combitech A/S</b> for helping with kickstarting the idea and allocating resources for the project development.<br>
-<a href="https://www.combitech.com/denmark"><img src="https://www.combitech.com/siteassets/combitech-logo-vitbg.png"/></a>
+<a href="https://www.combitech.com/denmark"><img src="https://www.combitech.com/siteassets/combitech-logo-vitbg.png" width="400"/></a>
