@@ -1,4 +1,4 @@
-![OSINTer](https://raw.githubusercontent.com/bertmad3400/OSINTer/master/logo.png)
+[![OSINTer](https://raw.githubusercontent.com/bertmad3400/OSINTer/master/logo.png)](https://osinter.dk)
 # Introduction
 OSINTer is an open source intelligence gathering tool, designed to ease the intelligence gathering process by scraping reliable intelligence news sources, and presenting them in an easy to navigate UI, hosted as a webserver, to allow intelligence analysts to look at a great deal of intelligence collectively.
 OSINTer is split into multiple repositories for ease of development.
@@ -10,7 +10,7 @@ OSINTer is split into multiple repositories for ease of development.
 | ![OSINTprofiles](https://github.com/bertmad3400/OSINTmodules) | Responsible for specifying the various sources that are scraped for intelligence. |
 | ![OSINTwebserver](https://github.com/bertmad3400/OSINTwebserver) | Responsible for displaying the intelligence in an easy to view format.|
 
- For a demonstration of how it looks and works, have a look at our demo-site at ![OSINTer.dk](osinter.dk)
+ For a demonstration of how it looks and works, have a look at our demo-site at [OSINTer.dk](https://osinter.dk)
 
 ## What problem does OSINTer solve?
 The process of gathering cyber threat intelligence is only as successful as the investigators ability to identify relevant intelligence sources. Identifying relevant and reliable sources could often be a time-consuming task, as the CTI personnel would have to first locate the intelligence source, then read it to identify its relevance and usefulness as well as identify its formatting, and finally mark down all relevant details for usage in their report.<br>
