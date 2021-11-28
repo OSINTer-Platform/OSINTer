@@ -1,5 +1,6 @@
+# OSINTer
 [![OSINTer](https://raw.githubusercontent.com/bertmad3400/OSINTer/master/logo.png)](https://osinter.dk)
-# Introduction
+## Introduction
 OSINTer is an open source intelligence gathering tool, designed to ease the intelligence gathering process by scraping reliable intelligence news sources, and presenting them in an easy to navigate UI, hosted as a webserver, to allow intelligence analysts to look at a great deal of intelligence collectively.
 OSINTer is split into multiple repositories for ease of development.
 | Repository | Description |
