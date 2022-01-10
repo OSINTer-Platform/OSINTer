@@ -2,7 +2,8 @@
 [![OSINTer](https://raw.githubusercontent.com/bertmad3400/OSINTer/master/logo.png)](https://osinter.dk)
 ## Introduction
 OSINTer is an open source intelligence gathering tool, designed to ease the intelligence gathering process by scraping reliable intelligence news sources, and presenting them in an easy to navigate UI, hosted as a webserver, to allow intelligence analysts to look at a great deal of intelligence collectively.
-OSINTer is split into multiple repositories for ease of development.
+
+OSINTer is split into multiple repositories for ease of development, listed below:
 | Repository | Description |
 | --- | --- |
 | ![OSINTansible](https://github.com/bertmad3400/OSINTansible) | Responsible for making the installation process easier, by using ansible. |
@@ -13,23 +14,27 @@ OSINTer is split into multiple repositories for ease of development.
 
  For a demonstration of how it looks and works, have a look at our demo-site at [OSINTer.dk](https://osinter.dk)
 
-## What problem does OSINTer solve?
-The process of gathering cyber threat intelligence is only as successful as the investigators ability to identify relevant intelligence sources. Identifying relevant and reliable sources could often be a time-consuming task, as the CTI personnel would have to first locate the intelligence source, then read it to identify its relevance and usefulness as well as identify its formatting, and finally mark down all relevant details for usage in their report.<br>
-This is time consuming and can be hit and miss depending on the skill and experience of the CTI personnel.
+## What problem does OSINTer attempt to solve?
+The process of gathering cyber threat intelligence is only as successful as the investigators ability to identify relevant intelligence sources. Identifying relevant and reliable sources could often be a time-consuming task, as the CTI personnel would have to first locate the intelligence source, then read it to identify its relevance and usefulness as well as identify its formatting, and finally mark down all relevant details for usage in their report. This is time consuming and can be hit and miss depending on the skill and experience of the CTI personnel, and while products to combat this repetitive and time-consuming task, like Recorded Future, exists, these are often not only expensive, but also closed in nature, as they rarely integrate well with thirdparty utilities.
+
+The goal of OSINTer is to build an open-source and extensible platform for collecting and organizing open-source intelligence in a way that easily intergrates with thirdparty utilities and other pieces of open-source software. As such, it never was (and never will be) intended to compete with products like the aforementioned Recorded Future, since the core concept is very different and since OSINTer does not offer the needed analysis capabilities on its own.
+
 
 ## How does OSINTer Solve the Problem?
-Firstly, to combat the time-consuming task of identifying relevant threat intelligence sources, OSINTer gathers information from known, reliable sources, automatically, and then displays these in its webservice interface in a list sorted by publish date. Providing the most current information first, and in a consistent format so that users can easily identify the relevant information sources for their CTI reports.<br>
-Secondly, the information is archived and the webservice provides functionality for users to download Markdown files. These files, when imported into any markdown editor (preferably Obsidian), allows the user to analyze on all or parts of the collected information. Obsidian has tools to easily detect correlations between the information, providing a much-needed overview of the collected information.
+Firstly, to combat the time-consuming task of identifying relevant threat intelligence sources, OSINTer gathers information from known, reliable sources, automatically, and then displays these in its webservice interface in a list sorted by publish date. This provides the most current information first, and in a consistent format so that users can easily identify the relevant information sources for their CTI reports or other use cases.
+
+Secondly, the content from the threat intelligence sources is archived and retrievable for the user, through a download functionality in OSINTer, which allows for download Markdown files containing this content, and formattet in a consisten fashion. These files, when imported into any markdown editor (preferably Obsidian), allows the user to analyze on all or parts of the collected information. Obsidian has tools to easily detect correlations between the information, providing a much-needed overview of the collected information.
 
 ## How do we intend to use OSINTer?
-Firstly, we intend to utilize this in our work with the CTI subscription service. With OSINTer deployed internally, the CTI team can easily identify relevant sources for the CTI reports.<br>
-Secondly, the tool can later be used in integrations with detection tools to be made further down the line. This will allow to expand its usage inside future services Combitech may wish to provide, including Project Grapevine.
+Our current intent with OSINTer is deploying it internally where needed as to aid CTI team in easily identify relevant sources for future CTI reports, and to deploy a single central instance of OSINTer to start building an archive of historical data.
+
+In the future, it is hovewer also our intend to use OSINTer in conjunction with detection and analysis tools made further down the line. There is currently an effort ongoing to convert the backend of OSINTer from a RDBMS and files on the disk, to an Elasticsearch cluster, which would not only allow extensibility in a way that is currently impossible, potentially allowing for intercommunication between OSINTer instances, and allow for integration of future tools, like Project Grapevine plan proposed by Combitech.
 
 
 # Quickstart/How-To-Use
 - Install the ansible package from your repos along with python 3 and the "cryptography" python package.
 - Setup a new server using one of the supported distributions listed below and configure a regular user with sudo and SSH access using an SSH key.
-  <br>While it is not neccessarily needed to install python 3 on the remote machine, it is recommended, to limit the possibilities of bugs.
+  While it is not neccessarily needed to install python 3 on the remote machine, it is recommended, to limit the possibilities of bugs.
 - Clone the <a href="https://github.com/bertmad3400/OSINTansible">OSINTansible</a> git repo and navigate to that directory
 - Execute ``` ansible-playbook -K playbooks/main.yml -u [regular_user] -i [remotes] --key-file [private_key_location] ``` with remotes being a comma seperated list of remote servers (add a single trailing comma if only using one remote server), regular_user being the regular, non-root user you set up just before and private_key_location being the path to the private key for your ssh connection.
 - When using an SSH key, remember to protect it with ```chmod 400 [private_key_location]```.
@@ -59,9 +64,9 @@ OSINTer utilizes Nginx to utilize the frontend portion of the solution. In order
 
 ### PostgreSQL
 In order to store the collected information, OSINTer utilizes PostgreSQL. If the server already has PostgreSQL installed it will be reconfigured for OSINTer:
-- On non-Debian based systems, it will try to initialize a new DB cluster inthe default location.◇ For Arch this is var/lib/postgres/data as defined in the Archlinux.jsonfile and for CentOS/Rocky Linux this is /var/lib/pgsql/data as pre-definedby the OS
-- It will replace the postgres.conf file and the pg_hba.conf file◇ This will keep the authenification method for the postgres user as being peer-authentification
-   → This will prevent any kind of connection to the DB using anything else but the unix socket
+- On non-Debian based systems, it will try to initialize a new DB cluster inthe default location. For Arch this is var/lib/postgres/data as defined in the Archlinux.jsonfile and for CentOS/Rocky Linux this is /var/lib/pgsql/data as pre-definedby the OS
+- It will replace the postgres.conf file and the pg_hba.conf file. This will keep the authenification method for the postgres user as being peer-authentification
+   - This will prevent any kind of connection to the DB using anything else but the unix socket
 - It will create a new DB and a whole range of new users described in the pg_hba.conf file
 - It will restart the service
 
@@ -152,5 +157,6 @@ Thanks to all of these people for assisting in making this project become a real
 <a href="https://github.com/dtclayton/"><img src="https://avatars.githubusercontent.com/u/46198611?v=4" width="100" height="100" alt="dtclayton"/></a>
 
 ## Organisations
-Thanks to <b>Combitech A/S</b> for helping with kickstarting the idea and allocating resources for the project development.<br>
+Thanks to Combitech A/S for helping with kickstarting the idea and allocating resources for the project development.
+
 <a href="https://www.combitech.com/denmark"><img src="https://www.combitech.com/siteassets/combitech-logo-vitbg.png" width="400"/></a>
