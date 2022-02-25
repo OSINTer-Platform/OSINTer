@@ -80,6 +80,11 @@ When installing OSINTer you have the option of providing it with a CA certificat
 - Rename a copy of a certificate signed by the CA to "ca.crt" and move it to that same directory
 - Now simply follow the instructions in the quick guide to install OSINTer. The ansible playbooks will automatically recognize the CA and use it for signing the certificates.
 
+# In Depth Details
+![flowchar](https://raw.githubusercontent.com/bertmad3400/OSINTer/testing/flowchart.png)
+
+So how does OSINTer function? There is a (admittedly quite primitive and missing a lot of details) flowchart included just above, but if that's not your coup of tea, then here a quick rundown of the inner functions of OSINTer.
+
 ## What are profiles?
 To understand the script, an understanding of the profiles that enables this script to run in the first place is certainly neccessary. Profiles are in short simply data structured in a JSON format specifying where and what to scrape. These are custom created on a site to site basis, and since nearly all news sites have the same structure (more or less) on all of their articles, they're made to describe some generic rules on where to find given pieces of information on a page, like in what HTML element with what tag the date is to be found, or what element is encapsulating the text in the articles.
 
@@ -87,11 +92,6 @@ The goal with the profiles is to be as generic as possible, with the most in com
 
 Some site hovewer, does not offer a RSS feed, or maybe they, but it doesn't conform to the standard. Here classic webscraping of the front page is used to find the newest articles, and while it does not offer the same reliability as the RSS feeds, it does allow for gathering of articles from close to any news site.
 
-
-## In Depth Details
-![flowchar](https://raw.githubusercontent.com/bertmad3400/OSINTer/testing/flowchart.png)
-
-So how does OSINTer function? There is a (admittedly quite primitive and missing a lot of details) flowchart included just above, but if that's not your coup of tea, then here a quick rundown of the inner functions of OSINTer.
 
 ## OSINTbackend
 
