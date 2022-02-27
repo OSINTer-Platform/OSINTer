@@ -45,6 +45,14 @@ In the future, it is hovewer also our intend to use OSINTer in conjunction with 
 - Supply the password for the [regular_user] when asked for the "BECOME password". This will be used for sudo priviledge escalation when needed.
 - For distributions with a firewall pre-installed (CentOS and Rocky Linux) remember to open port 80 and 443 on the right interfaces to allow HTTPS and HTTP traffic comming in and out.
 
+## Potential problems
+While OSINTer is designed to be installed on a host or series of hosts, which have just been installed, it can also be installed on host(s) running other software. Keep in mind that doing so will probably interfere with the following list of software if it's already installed:
+
+### Nginx
+OSINTer utilizes Nginx to utilize the frontend portion of the solution. In order to do so, the webserver will be reconfigured for OSINTer.
+- It will replace the nginx config file found at /etc/nginx/nginx.conf◇ This will make the nginx service run as the osinter-web user
+- It will create a new site in /etc/nginx/site-available and create a symlinkto that in /etc/nginx/sites-enabled
+- It will restart the service
 
 # Supported Systems
 Currently, these are the supported distributions using x86_64 architecture:
@@ -53,7 +61,6 @@ Currently, these are the supported distributions using x86_64 architecture:
 - Ubuntu Server 20
 - CentOS Linux 8
 - Rocky Linux 8
-
 
 # Custom Certificates for the frontend
 When installing OSINTer you have the option of providing it with a CA certificate and CA private key, then the ansible installation will write a certificate for your server, which it will utilize for it's webfront. Alternatively OSINTer will generate a selfsigned certificate which will be used instead. The process of using your own CA is as follows:
