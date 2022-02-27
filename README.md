@@ -55,20 +55,21 @@ Currently, these are the supported distributions using x86_64 architecture:
 - Rocky Linux 8
 
 
-# Technical
-While OSINTer is designed to be installed on a host or series of hosts, which have just been installed, it can also be installed on host(s) running other software. Keep in mind that doing so will probably interfere with the following list of software if it's already installed:
-
-### Nginx
-OSINTer utilizes Nginx to utilize the frontend portion of the solution. In order to do so, the webserver will be reconfigured for OSINTer.
-- It will replace the nginx config file found at /etc/nginx/nginx.conf◇ This will make the nginx service run as the osinter-web user
-- It will create a new site in /etc/nginx/site-available and create a symlinkto that in /etc/nginx/sites-enabled
-- It will restart the service
-
-## Custom Certificates for the frontend
+# Custom Certificates for the frontend
 When installing OSINTer you have the option of providing it with a CA certificate and CA private key, then the ansible installation will write a certificate for your server, which it will utilize for it's webfront. Alternatively OSINTer will generate a selfsigned certificate which will be used instead. The process of using your own CA is as follows:
 - Rename a copy of the CA private key to "ca.key" and move it to the "./vars/CA"directory in the OSINTer-ansible folder before installing
 - Rename a copy of a certificate signed by the CA to "ca.crt" and move it to that same directory
 - Now simply follow the instructions in the quick guide to install OSINTer. The ansible playbooks will automatically recognize the CA and use it for signing the certificates.
+
+# Kibana Dashboards
+As OSINTer uses Elasticsearch in the backend for storing data, Kibana can be used to visualize the information scraped by OSINTer. To simplify this proccess, this repo includes a couple of Kibana Dashboards in the KibanaDashboards directory, which (if Kibana has been setup and connected to the same Elasticsearch as OSINTer) can be imported into Kibana using the following command:
+
+``` curl -X POST "[kibana_web_adress]/api/saved_objects/_import?createNewCopies=true" -H "kbn-xsrf: true" --form file=@[dasboard_file_name] ```
+
+Example of how to use command, with Kibana running on localhost, with an elastic user with the password set to "elastic" and using the Articles dashboard:
+
+``` curl -X POST "https://elastic:elastic@localhost:5601/api/saved_objects/_import?createNewCopies=true" -H "kbn-xsrf: true" --form file=@./KibanaDashboards/OSINTerArticles.ndjson```
+
 
 
 # Contributers
