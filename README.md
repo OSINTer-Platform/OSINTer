@@ -66,13 +66,8 @@ OSINTer utilizes Nginx to utilize the frontend portion of the solution. In order
 - It will create a new site in /etc/nginx/site-available and create a symlinkto that in /etc/nginx/sites-enabled
 - It will restart the service
 
-### PostgreSQL
-In order to store the collected information, OSINTer utilizes PostgreSQL. If the server already has PostgreSQL installed it will be reconfigured for OSINTer:
-- On non-Debian based systems, it will try to initialize a new DB cluster inthe default location. For Arch this is var/lib/postgres/data as defined in the Archlinux.jsonfile and for CentOS/Rocky Linux this is /var/lib/pgsql/data as pre-definedby the OS
-- It will replace the postgres.conf file and the pg_hba.conf file. This will keep the authenification method for the postgres user as being peer-authentification
-   - This will prevent any kind of connection to the DB using anything else but the unix socket
-- It will create a new DB and a whole range of new users described in the pg_hba.conf file
-- It will restart the service
+### Elasticsearch
+OSINTer utilizes Elasticsearch as the main DB for storing collected information, and while the installation of Elasticsearch done by OSINTansible is not system-wide (and therefore won't interfere with the files of any current installation), it will attempt to start Elasticsearch with the default ports (9200 and 9300), which might interfere with already running instances of Elasticsearch, and (due to the high RAM usage) also could get one of the two Elasticsearch proccesses killed
 
 ## Custom Certificates
 When installing OSINTer you have the option of providing it with a CA certificate and CA private key, then the ansible installation will write a certificate for your server, which it will utilize for it's webfront. Alternatively OSINTer will generate a selfsigned certificate which will be used instead. The process of using your own CA is as follows:
