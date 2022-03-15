@@ -10,11 +10,11 @@ OSINTer is an open source intelligence gathering tool, designed to ease the inte
 OSINTer is split into multiple repositories for ease of development, listed below:
 | Repository | Description |
 | --- | --- |
-| ![OSINTansible](https://github.com/bertmad3400/OSINTansible) | Responsible for making the installation process easier, by using ansible. |
-| ![OSINTbackend](https://github.com/bertmad3400/OSINTbackend) | Responsible for the scraping and initialization of OSINTer. |
-| ![OSINTmodules](https://github.com/bertmad3400/OSINTmodules) | Responsible for handling many of the finer operations, such as the scraping, text handling, and DBMS. |
-| ![OSINTprofiles](https://github.com/bertmad3400/OSINTprofiles) | Responsible for specifying the various sources that are scraped for intelligence. |
-| ![OSINTwebserver](https://github.com/bertmad3400/OSINTwebserver) | Responsible for displaying the intelligence in an easy to view format.|
+| [OSINTansible](https://github.com/bertmad3400/OSINTansible) | Responsible for making the installation process easier, by using ansible. |
+| [OSINTbackend](https://github.com/bertmad3400/OSINTbackend) | Responsible for the scraping and initialization of OSINTer. |
+| [OSINTmodules](https://github.com/bertmad3400/OSINTmodules) | Responsible for handling many of the finer operations, such as the scraping, text handling, and DBMS. |
+| [OSINTprofiles](https://github.com/bertmad3400/OSINTprofiles) | Responsible for specifying the various sources that are scraped for intelligence. |
+| [OSINTwebserver](https://github.com/bertmad3400/OSINTwebserver) | Responsible for displaying the intelligence in an easy to view format.|
 
  For a demonstration of how it looks and works, have a look at our demo-site at [OSINTer.dk](https://osinter.dk)
 
@@ -36,10 +36,12 @@ In the future, it is hovewer also our intend to use OSINTer in conjunction with 
 
 
 # Quickstart/How-To-Use
+*This section has been outdated by the latest updates, and there is work going on to update it*
+
 - Install the ansible package from your repos along with python 3 and the "cryptography" python package.
 - Setup a new server using one of the supported distributions listed below and configure a regular user with sudo and SSH access using an SSH key.
   While it is not neccessarily needed to install python 3 on the remote machine, it is recommended, to limit the possibilities of bugs.
-- Clone the <a href="https://github.com/bertmad3400/OSINTansible">OSINTansible</a> git repo and navigate to that directory
+- Clone the [OSINTansible](https://github.com/bertmad3400/OSINTansible) git repo and navigate to that directory
 - Execute ``` ansible-playbook -K playbooks/main.yml -u [regular_user] -i [remotes] --key-file [private_key_location] ``` with remotes being a comma seperated list of remote servers (add a single trailing comma if only using one remote server), regular_user being the regular, non-root user you set up just before and private_key_location being the path to the private key for your ssh connection.
 - When using an SSH key, remember to protect it with ```chmod 400 [private_key_location]```.
 - Supply the password for the [regular_user] when asked for the "BECOME password". This will be used for sudo priviledge escalation when needed.
@@ -54,32 +56,19 @@ OSINTer utilizes Nginx to utilize the frontend portion of the solution. In order
 - It will create a new site in /etc/nginx/site-available and create a symlinkto that in /etc/nginx/sites-enabled
 - It will restart the service
 
-# Supported Systems
-Currently, these are the supported distributions using x86_64 architecture:
-- Debian 10/11
-- Arch
-- Ubuntu Server 20
-- CentOS Linux 8
-- Rocky Linux 8
-
-<<<<<<< HEAD
-We do recommend running OSINTer on Arch Linux, as this has proven to - for unknown reasons - have a substantial perfomance increase over the other distributions during our very extensive testing, but we do realize that this unfortunatly isn't possible foreveryone, and therefore we fully support the other platforms listed.
-
-
-# Technical
-While OSINTer is designed to be installed on a host or series of hosts, which have just been installed, it can also be installed on host(s) running other software. Keep in mind that doing so will probably interfere with the following list of software if it's already installed:
-
-### Nginx
-OSINTer utilizes Nginx to utilize the frontend portion of the solution. In order to do so, the webserver will be reconfigured for OSINTer.
-- It will replace the nginx config file found at /etc/nginx/nginx.conf◇ This will make the nginx service run as the osinter-web user
-- It will create a new site in /etc/nginx/site-available and create a symlinkto that in /etc/nginx/sites-enabled
-- It will restart the service
-
 ### Elasticsearch
 OSINTer utilizes Elasticsearch as the main DB for storing collected information, and while the installation of Elasticsearch done by OSINTansible is not system-wide (and therefore won't interfere with the files of any current installation), it will attempt to start Elasticsearch with the default ports (9200 and 9300), which might interfere with already running instances of Elasticsearch, and (due to the high RAM usage) also could get one of the two Elasticsearch proccesses killed
 
+# Supported Systems
+Currently, these are the supported distributions using x86_64 architecture:
+- Debian 11
+- Arch
+- Rocky Linux 8
+
+We do recommend running OSINTer on Arch Linux, as this has proven to - for unknown reasons - have a substantial perfomance increase over the other distributions during our very extensive testing, but we do realize that this unfortunatly isn't possible foreveryone, and therefore we fully support the other platforms listed.
+
+
 # Custom Certificates for the frontend
->>>>>>> elastic
 When installing OSINTer you have the option of providing it with a CA certificate and CA private key, then the ansible installation will write a certificate for your server, which it will utilize for it's webfront. Alternatively OSINTer will generate a selfsigned certificate which will be used instead. The process of using your own CA is as follows:
 - Rename a copy of the CA private key to "ca.key" and move it to the "./vars/CA"directory in the OSINTer-ansible folder before installing
 - Rename a copy of a certificate signed by the CA to "ca.crt" and move it to that same directory
@@ -87,7 +76,6 @@ When installing OSINTer you have the option of providing it with a CA certificat
 
 # Kibana Dashboards
 As OSINTer uses Elasticsearch in the backend for storing data, Kibana can be used to visualize the information scraped by OSINTer. To simplify this proccess, this repo includes a couple of Kibana Dashboards in the KibanaDashboards directory, which (if Kibana has been setup and connected to the same Elasticsearch as OSINTer) can be imported into Kibana using the following command:
->>>>>>> elastic
 
 ``` curl -X POST "[kibana_web_adress]/api/saved_objects/_import?createNewCopies=true" -H "kbn-xsrf: true" --form file=@[dasboard_file_name] ```
 
@@ -96,7 +84,7 @@ Example of how to use command, with Kibana running on localhost, with an elastic
 ``` curl -X POST "https://elastic:elastic@localhost:5601/api/saved_objects/_import?createNewCopies=true" -H "kbn-xsrf: true" --form file=@./KibanaDashboards/OSINTerArticles.ndjson```
 
 # In Depth Details
-![flowchar](https://raw.githubusercontent.com/bertmad3400/OSINTer/testing/flowchart.png)
+![flowchart](https://raw.githubusercontent.com/bertmad3400/OSINTer/master/flowchart.png)
 
 So how does OSINTer function? There is a (admittedly quite primitive and missing a lot of details) flowchart included just above, but if that's not your coup of tea, then here a quick rundown of the inner functions of OSINTer.
 
@@ -104,6 +92,8 @@ So how does OSINTer function? There is a (admittedly quite primitive and missing
 To understand the script, an understanding of the profiles that enables this script to run in the first place is certainly neccessary. Profiles are in short simply data structured in a JSON format specifying where and what to scrape. These are custom created on a site to site basis, and since nearly all news sites have the same structure (more or less) on all of their articles, they're made to describe some generic rules on where to find given pieces of information on a page, like in what HTML element with what tag the date is to be found, or what element is encapsulating the text in the articles.
 
 ## OSINTbackend
+
+*This section has been outdated by the latest updates, and there is work going on to update it*
 
 ### Phase 1
 Firstly, a scheduler of some sorts starts OSINTbackend. This could be anything from a systemD timer to a simple script set to run at specified intervals, but if deploying OSINTer using the included ansible solution, this scheduler will simply be consisting of a few cronbjobs. Once started, OSINTbackend will gather a list of the profiles within the OSINTprofiles directory and scrape the frontpage/RSS feed of each newssite represented in those profiles for the URL of up to 10 of the newest articles. The limit at 10 hasn't shown to be a problem yet, as OSINTbackend is being run, once an hour, meaning that it never misses articles, but should it be shown to cause problems, it can simply be increased. For now it's mostly there for historical reasons. This proccess results in a dictionary of lists looking something like this:
@@ -161,8 +151,6 @@ It is often that we see that even big cooporations having problems with password
 #### Local file permissions
 
 As it is desirable to have the webserver run reliably and persistently (so that it also survives a reboot), our gunicorn instance is being run as a SystemD service. This service is being run as the osinter-web user, setup by the ansible playbook, but as the group http. The reason for this desicion not to run the it using the osinter group instead, is to allow Nginx to access the socket file created the gunicorn instance, as the Nginx config file has been modified to make Nginx run also as the group http. This allows intercommuncation between the to proccesses, without opening our socket file up to the whole system, potentially allowing every proccess on the system to eavsdrop on the communication. Even without those permission setting the eavsdropping scenario is still extremly unlikely to prove to be a problem, as the commincation between Nginx and the gunicorn proccess is also HTTPS, but it does prevent any proccess from writting garbage to the socket, effectivly executing a DOS attack. Furthermore, the right permissions allows to do some manual modifications to run HTTP instead of HTTPS between Nginx and gunicorn, should the HTTPS be a problem regarding solutions like LetsEncrypt.
-=======
->>>>>>> elastic
 
 
 # Contributers
