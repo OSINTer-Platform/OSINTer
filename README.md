@@ -15,6 +15,7 @@ OSINTer is split into multiple repositories for ease of development, listed belo
 | [OSINTmodules](https://github.com/bertmad3400/OSINTmodules) | Responsible for handling many of the finer operations, such as the scraping, text handling, and DBMS. |
 | [OSINTprofiles](https://github.com/bertmad3400/OSINTprofiles) | Responsible for specifying the various sources that are scraped for intelligence. |
 | [OSINTwebserver](https://github.com/bertmad3400/OSINTwebserver) | Responsible for displaying the intelligence in an easy to view format.|
+| [OSINTblog](https://github.com/bertmad3400/OSINTblog) | Responsible for the software and content at the blog associated with OSINTer |
 
  For a demonstration of how it looks and works, have a look at our demo-site at [OSINTer.dk](https://osinter.dk)
 
