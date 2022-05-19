@@ -1,5 +1,5 @@
 # OSINTer
-[![OSINTer](https://raw.githubusercontent.com/bertmad3400/OSINTer/master/logo.png)](https://osinter.dk)
+[![OSINTer](https://gitlab.com/osinter/osinter/raw/master/logo.png)](https://osinter.dk)
 
 ## *Looking for help*
 OSINTer has grown a lot the last few months, and after adopting a new backend powered by Elasticsearch, it has become able to handle very large amounts of data. Therefore we are currently looking into machine learning for doing a bit of data analysis (specifically text summarization and data clustering), but unfortunately my knowledge on the subject is rather sparse. Therefore, if you're data scientist/analysis, or programmer who has a hold these subjects, and would like to contribute to OSINTer, please reach out on skrivtilbertram@gmail.com. As the project is free and open-source (and I'm doing the development unpaid) I unfortunately do not have the possibility of paying for your work, but at least there's plenty of currated real-world data and interresting challenges.
@@ -10,12 +10,13 @@ OSINTer is an open source intelligence gathering tool, designed to ease the inte
 OSINTer is split into multiple repositories for ease of development, listed below:
 | Repository | Description |
 | --- | --- |
-| [OSINTansible](https://github.com/bertmad3400/OSINTansible) | Responsible for making the installation process easier, by using ansible. |
-| [OSINTbackend](https://github.com/bertmad3400/OSINTbackend) | Responsible for the scraping and initialization of OSINTer. |
-| [OSINTmodules](https://github.com/bertmad3400/OSINTmodules) | Responsible for handling many of the finer operations, such as the scraping, text handling, and DBMS. |
-| [OSINTprofiles](https://github.com/bertmad3400/OSINTprofiles) | Responsible for specifying the various sources that are scraped for intelligence. |
-| [OSINTwebserver](https://github.com/bertmad3400/OSINTwebserver) | Responsible for displaying the intelligence in an easy to view format.|
-| [OSINTblog](https://github.com/bertmad3400/OSINTblog) | Responsible for the software and content at the blog associated with OSINTer |
+| [OSINTansible](https://gitlab.com/osinter/ansible) | Responsible for making the installation process easier, by using ansible. |
+| [OSINTbackend](https://gitlab.com/osinter/backend) | Responsible for the scraping and initialization of OSINTer. |
+| [OSINTmodules](https://gitlab.com/osinter/modules) | Responsible for handling many of the finer operations, such as the scraping, text handling, and DBMS. |
+| [OSINTprofiles](https://gitlab.com/osinter/profiles) | Responsible for specifying the various sources that are scraped for intelligence. |
+| [OSINTwebserver](https://gitlab.com/osinter/webserver) | Responsible for displaying the intelligence in an easy to view format.|
+| [OSINTblog](https://gitlab.com/osinter/blog) | Responsible for the software and content at the blog associated with OSINTer |
+
 
  For a demonstration of how it looks and works, have a look at our demo-site at [OSINTer.dk](https://osinter.dk)
 
@@ -42,7 +43,7 @@ In the future, it is hovewer also our intend to use OSINTer in conjunction with 
 - Install the ansible package from your repos along with python 3 and the "cryptography" python package.
 - Setup a new server using one of the supported distributions listed below and configure a regular user with sudo and SSH access using an SSH key.
   While it is not neccessarily needed to install python 3 on the remote machine, it is recommended, to limit the possibilities of bugs.
-- Clone the [OSINTansible](https://github.com/bertmad3400/OSINTansible) git repo and navigate to that directory
+- Clone the [OSINTansible](https://gitlab.com/osinter/ansible) git repo and navigate to that directory
 - Execute ``` ansible-playbook -K playbooks/main.yml -u [regular_user] -i [remotes] --key-file [private_key_location] ``` with remotes being a comma seperated list of remote servers (add a single trailing comma if only using one remote server), regular_user being the regular, non-root user you set up just before and private_key_location being the path to the private key for your ssh connection.
 - When using an SSH key, remember to protect it with ```chmod 400 [private_key_location]```.
 - Supply the password for the [regular_user] when asked for the "BECOME password". This will be used for sudo priviledge escalation when needed.
@@ -85,7 +86,7 @@ Example of how to use command, with Kibana running on localhost, with an elastic
 ``` curl -X POST "https://elastic:elastic@localhost:5601/api/saved_objects/_import?createNewCopies=true" -H "kbn-xsrf: true" --form file=@./KibanaDashboards/OSINTerArticles.ndjson```
 
 # In Depth Details
-![flowchart](https://raw.githubusercontent.com/bertmad3400/OSINTer/master/flowchart.png)
+![flowchart](https://gitlab.com/osinter/osinter/raw/master/flowchart.png)
 
 So how does OSINTer function? There is a (admittedly quite primitive and missing a lot of details) flowchart included just above, but if that's not your coup of tea, then here a quick rundown of the inner functions of OSINTer.
 
@@ -120,7 +121,7 @@ The third phase of OSINTbackend is possibly the most interresting. The two prior
 
 1. The first way of generating keywords is the simplest, and is less about actually generating keywords and more about simply extracting objects of interrest in the text. This step uses a dictionary comprissed of regex's to find objects of potential interrest in the article, which could be things like IPv4 and 6 adresses, email adresses and URL's, but also MITRE IDs and CVE numbers. This also means that adding more objects of interrest for OSINTbackend to look for when scraping future articles is as simple as adding a regex to this dictionary.
 
-2. The second uses the specified keywords lists in the OSINTbackend/tools/keywords/ directory, to - based on finding some specific words in the articles - tag the markdown file with the relevant terms, which is refered to as "Manual Tags" in the code (As the blueprints - aka the keyword files - for tagging is created manually in contrast to the next step). Again, adding potential tags for OSINTbackend to use in the feature, is as simple as creating more keyword files (a proccess described in the README of the [OSINTbackend repo](https://github.com/bertmad3400/OSINTbackend)) and placing those in the keyword files directory.
+2. The second uses the specified keywords lists in the OSINTbackend/tools/keywords/ directory, to - based on finding some specific words in the articles - tag the markdown file with the relevant terms, which is refered to as "Manual Tags" in the code (As the blueprints - aka the keyword files - for tagging is created manually in contrast to the next step). Again, adding potential tags for OSINTbackend to use in the feature, is as simple as creating more keyword files (a proccess described in the README of the [OSINTbackend repo](https://gitlab.com/osinter/backend)) and placing those in the keyword files directory.
 
 3. The third and last proccess for tagging the articles tries to extract technical terms and names from the articles and tag the MD files with those. It does this by firstly cleaning the text content of the article, and then comparing every single word in the article to a list of the 370.000 most common words in the english language. If a specific word is found in the article, but not in this dictionary, it seems resonable to assume that this word is some kind of name or technical term, and if it's found enough times in the article text, then the article MD file is tagged with it.
 
