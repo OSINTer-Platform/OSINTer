@@ -4,6 +4,9 @@
 ## *Looking for help*
 OSINTer has grown a lot the last few months, and after adopting a new backend powered by Elasticsearch, it has become able to handle very large amounts of data. Therefore we are currently looking into machine learning for doing a bit of data analysis (specifically text summarization and data clustering), but unfortunately my knowledge on the subject is rather sparse. Therefore, if you're data scientist/analysis, or programmer who has a hold these subjects, and would like to contribute to OSINTer, please reach out on skrivtilbertram@gmail.com. As the project is free and open-source (and I'm doing the development unpaid) I unfortunately do not have the possibility of paying for your work, but at least there's plenty of currated real-world data and interresting challenges.
 
+## Contributing
+As OSINTer is open-source we highly encourage any form of contributing under the current license in the relevant parts of the project. Should you want to contribute, then this is done either by sending the patches manually over email to skrivtilbertram@gmail.com, or by utilizing the [Gitlab platform](https://gitlab.com/osinter) to submit pull requests (if you're reading this on Github, then that's merely a downstream mirror of the Gitlab repositories).
+
 ## Introduction
 OSINTer is an open source intelligence gathering tool, designed to ease the intelligence gathering process by scraping reliable intelligence news sources, and presenting them in an easy to navigate UI, hosted as a webserver, to allow intelligence analysts to look at a great deal of intelligence collectively.
 
