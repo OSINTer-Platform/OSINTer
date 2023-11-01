@@ -1,30 +1,30 @@
 # OSINTer
-[![OSINTer](https://gitlab.com/osinter/osinter/raw/master/logo.png)](https://osinter.dk)
+[![OSINTer](https://raw.githubusercontent.com/OSINTer-Platform/OSINTer/master/logo/full.png)](https://osinter.dk)
 
 ## Contributing
-While OSINTer is currently unfortunately not open-source we highly encourage any
-form of contributing. Should you want to contribute, then please get in contact
-with the primary maintainer, either at skrivtilbertram@gmail.com or on the
-Gitlab repos (if you are reading this on Github, then that is simply a
-downstream mirror).
+While OSINTer is currently unfortunately not open-source we highly encourage
+any form of contributing. Should you want to contribute, then please get in
+contact either at contact@osinter.dk or on the Github repos (if you are reading
+this on Gitlab, then that is simply a downstream mirror).
 
 ## Introduction
 OSINTer is a - previously open-source, now just source-available - intelligence
 gathering tool, designed to ease the intelligence gathering process by scraping
 reliable intelligence news sources, and presenting them in an easy to navigate
-UI, hosted as a webserver, to allow intelligence analysts to look at a great
-deal of intelligence collectively.
+UI, hosted as a web-application, to allow intelligence analysts to handle large
+amounts of intelligence.
 
 OSINTer is split into multiple repositories for ease of development, listed
 below:
 | Repository | Description |
 | --- | --- |
-| [OSINTansible](https://gitlab.com/osinter/ansible) | Responsible for making the installation process easier, by using ansible. |
-| [OSINTbackend](https://gitlab.com/osinter/backend) | Responsible for the scraping and initialization of OSINTer. |
-| [OSINTmodules](https://gitlab.com/osinter/modules) | Responsible for cross-repo functionality. |
-| [OSINTprofiles](https://gitlab.com/osinter/profiles) | Responsible for specifying the various sources that are scraped for intelligence. |
-| [OSINTwebfrontend](https://gitlab.com/osinter/webfrontend2) | Responsible for displaying the intelligence in an easy to view format.|
-| [OSINTblog](https://gitlab.com/osinter/blog) | Responsible for the content at the blog associated with OSINTer |
+| [OSINTansible](https://github.com/OSINTer-platform/ansible) | Responsible for making the installation process easier, by using ansible. |
+| [OSINTbackend](https://github.com/OSINTer-platform/backend) | Responsible for the scraping and initialization of OSINTer. |
+| [OSINTmodules](https://github.com/OSINTer-platform/modules) | Responsible for cross-repo functionality. |
+| [OSINTapi](https://github.com/OSINTer-platform/api) | Responsible for displaying the intelligence in an easy to view format.|
+| [OSINTwebfrontend](https://github.com/OSINTer-platform/webfrontend2) | Responsible for displaying the intelligence in an easy to view format.|
+| [OSINTprofiles](https://github.com/OSINTer-platform/profiles) | Responsible for specifying the various sources that are scraped for intelligence. |
+| [OSINTblog](https://github.com/OSINTer-platform/blog) | Responsible for the content at the blog associated with OSINTer |
 
 
  For a demonstration of how it looks and works, have a look at our demo-site at
