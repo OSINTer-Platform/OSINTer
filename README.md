@@ -2,8 +2,8 @@
 [![OSINTer](https://raw.githubusercontent.com/OSINTer-Platform/OSINTer/master/logo/full.png)](https://osinter.dk)
 
 ## Contributing
-While OSINTer is currently unfortunately not open-source we highly encourage
-any form of contributing. Should you want to contribute, then please get in
+As OSINTer is open-source we highly encourage
+any form of contributing. Should you want to contribute, then please get involved with this GitHub, og get in
 contact either at contact@osinter.dk or on the Github repos (if you are reading
 this on Gitlab, then that is simply a downstream mirror).
 
